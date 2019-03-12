@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.438
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "S2128503-Kramse-BI-Project", "S2128503-Kramse-BI-Project\S2128503-Kramse-BI-Project.dtproj", "{91603B21-790F-4400-A0A9-1359318109CC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{91603B21-790F-4400-A0A9-1359318109CC}.Development|Default.ActiveCfg = Development
+		{91603B21-790F-4400-A0A9-1359318109CC}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1653D0F7-13F4-4957-A143-C33BFDBA2400}
+	EndGlobalSection
+EndGlobal

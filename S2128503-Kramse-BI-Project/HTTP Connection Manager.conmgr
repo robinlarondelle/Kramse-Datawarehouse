@@ -1,0 +1,20 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="HTTP Connection Manager"
+  DTS:DTSID="{4749B733-0570-4A5B-854D-3554F9F08E04}"
+  DTS:CreationName="HTTP">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectionString="https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes">
+      <DTS:HttpConnection
+        DTS:ServerURL="https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes">
+        <DTS:Property
+          DTS:Name="ServerPassword"
+          Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAMmw8qZvYc0mwU7h/WN8M+gAAAAACAAAAAAAQZgAAAAEAACAAAACjS64xKGPFavv9jjWVE/28wC/AHv02llGaetvBhiIZ1AAAAAAOgAAAAAIAACAAAADljvHFUNz5h1tDS2XBcRfd6PFqw+QCsmjfh/G8v/zMfIAAAACvOccLg+wzHXRTe/AuT3NM3nCsked3fe2B7vmPwPnIhimEomsxEInhdhg+5tQ9S0UJt46aHbmdj95ULno2NHo95LI1zsqVO9p3kTAWtSVy6/k7BVlP4c2q+8ZgwIhOH7lIIy8eglVx5hhqny3HT/8TOBM3Iapr1xFJ21SsTrtQKkAAAAD4FFX4bgS40mHzs/9zbUNWT6obxwmx66dzVu3v30SQqC/BLPEXaUHj+0HWHMsbPeGlXi2v/pn7FOdm7Y1pOlNY</DTS:Property>
+        <DTS:Property
+          DTS:Name="ProxyPassword"
+          Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAMmw8qZvYc0mwU7h/WN8M+gAAAAACAAAAAAAQZgAAAAEAACAAAABH60fESy5akClNtyVN/wb2WEvPrf11yt/9ZEkAWGIMngAAAAAOgAAAAAIAACAAAAAIdMlbs375Jn9uywcTi21C/Xq4wwbHJx+zR2mqmJ+kuoAAAAAzVF8L1NFiSp5JxOLyA6D9K3dAkEtreAiPZ6hIwKHKmfx7+y70wYRYeeh95Zqb5CA3FD5+bQc9hVAUkz1dui40mOs7DKu/FQ1+S3mZqbqViep7ImbQj+v0i1VQ1w2vQqFnXjJcieyw2vEyxzvelfBw3Q0pS653HYGxj2B5VD6VZEAAAADpsy0LBIpttJAfO3s9wov04X5dqtsPB/YJHc8NbS+qw0xhXActfMBuvQDvF9ivvCLs2zALPAzEqlMzUkPuXuPq</DTS:Property>
+      </DTS:HttpConnection>
+    </DTS:ConnectionManager>
+  </DTS:ObjectData>
+</DTS:ConnectionManager>
