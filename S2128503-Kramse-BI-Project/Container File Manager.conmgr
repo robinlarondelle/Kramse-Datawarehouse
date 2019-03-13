@@ -21,7 +21,7 @@
           DTS:DataType="129"
           DTS:TextQualified="True"
           DTS:ObjectName="Id"
-          DTS:DTSID="{5FBED4C8-BC61-4142-830B-9B4CC52EDCC1}"
+          DTS:DTSID="{46A7168E-7E12-4DFE-82E4-6754BB655165}"
           DTS:CreationName="" />
         <DTS:FlatFileColumn
           DTS:ColumnType="Delimited"
@@ -30,7 +30,7 @@
           DTS:DataType="129"
           DTS:TextQualified="True"
           DTS:ObjectName="Type"
-          DTS:DTSID="{C292619E-99D7-4ECB-BDC1-A7B326416345}"
+          DTS:DTSID="{8D8672DA-0583-43BB-BAF7-7C4C77FD8D27}"
           DTS:CreationName="" />
         <DTS:FlatFileColumn
           DTS:ColumnType="Delimited"
@@ -39,7 +39,7 @@
           DTS:DataType="129"
           DTS:TextQualified="True"
           DTS:ObjectName="RefrigerationFlag"
-          DTS:DTSID="{1E5C5A99-1DB1-4FC9-ADFE-DC73F49BA32C}"
+          DTS:DTSID="{9FB36C92-55BE-4097-8A7A-B91BE3F6573C}"
           DTS:CreationName="" />
         <DTS:FlatFileColumn
           DTS:ColumnType="Delimited"
@@ -48,7 +48,7 @@
           DTS:DataType="129"
           DTS:TextQualified="True"
           DTS:ObjectName="PowerFlag"
-          DTS:DTSID="{C2748A77-B01E-4556-AEAE-99142BF2788C}"
+          DTS:DTSID="{DC3602B0-A78A-4D1F-B752-A5324B9F478A}"
           DTS:CreationName="" />
         <DTS:FlatFileColumn
           DTS:ColumnType="Delimited"
@@ -57,7 +57,7 @@
           DTS:DataType="129"
           DTS:TextQualified="True"
           DTS:ObjectName="Length"
-          DTS:DTSID="{30861496-B0A6-42FD-9F5E-CE5C3B8523EE}"
+          DTS:DTSID="{081B89CA-05F3-4D33-91C5-ED575231203F}"
           DTS:CreationName="" />
         <DTS:FlatFileColumn
           DTS:ColumnType="Delimited"
@@ -66,7 +66,7 @@
           DTS:DataType="129"
           DTS:TextQualified="True"
           DTS:ObjectName="Cubes"
-          DTS:DTSID="{0A8E74BE-4374-42B8-B500-F63785FE114E}"
+          DTS:DTSID="{F289CD67-8B9E-4B6B-B97C-E2ABA62B0EC5}"
           DTS:CreationName="" />
         <DTS:FlatFileColumn
           DTS:ColumnType="Delimited"
@@ -75,7 +75,7 @@
           DTS:DataType="129"
           DTS:TextQualified="True"
           DTS:ObjectName="EuroPricePerKm"
-          DTS:DTSID="{7BD7F6BF-96C9-44BF-AC10-BDD019979FDA}"
+          DTS:DTSID="{530A2663-D94E-4C17-A0D9-57432D9A2C04}"
           DTS:CreationName="" />
       </DTS:FlatFileColumns>
     </DTS:ConnectionManager>
