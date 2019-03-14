@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
-  DTS:ObjectName="KramseTPS v2"
+  DTS:ObjectName="Kramse Access Table"
   DTS:DTSID="{4027AF43-E7EF-4A84-8B02-0598E0F81191}"
   DTS:CreationName="OLEDB">
   <DTS:ObjectData>
