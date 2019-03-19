@@ -11,8 +11,8 @@
   DTS:LocaleID="1043"
   DTS:ObjectName="Extract Sources"
   DTS:PackageType="5"
-  DTS:VersionBuild="51"
-  DTS:VersionGUID="{14EF0C16-3128-427B-AD5D-958AA8D6EB58}">
+  DTS:VersionBuild="86"
+  DTS:VersionGUID="{8E401264-AAB1-4398-AE91-197997865AD4}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -30,7 +30,7 @@
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{117A4767-EB31-464C-9853-B06130B7B130}"
-          SQLTask:SqlStatementSource="DELETE FROM Consignor&#xA;DELETE FROM Containers&#xA;DELETE FROM Item&#xA;DELETE FROM Port&#xA;DELETE FROM Ship&#xA;DELETE FROM Shipment&#xA;DELETE FROM Shipment_Details&#xA;DELETE FROM Voyage&#xA;DELETE FROM VoyagePort&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="DELETE FROM Consignor&#xA;DELETE FROM Containers&#xA;DELETE FROM Countries&#xA;DELETE FROM Item&#xA;DELETE FROM Port&#xA;DELETE FROM Ship&#xA;DELETE FROM Shipment&#xA;DELETE FROM Shipment_Details&#xA;DELETE FROM Voyage&#xA;DELETE FROM VoyagePort&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
@@ -852,6 +852,412 @@
               endId="Package\Load ContainerList\OLE DB Destination.Inputs[OLE DB Destination Input]"
               name="Flat File Source Output"
               startId="Package\Load ContainerList\Flat File Source 1.Outputs[Flat File Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load Country List"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{680499DE-470E-439D-B841-CE4ACDC77A9B}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Country List"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Load Country List\Excel Source"
+              componentClassID="Microsoft.ExcelSource"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="Excel Source"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">'ISO 3166-1 COUNTRY codes$'</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Country List\Excel Source.Connections[OleDbConnection]"
+                  connectionManagerID="{7494E0BD-0DFB-4624-A913-CC3E2DF11F71}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Country List]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load Country List\Excel Source.Outputs[Excel Source Output]"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Country List\Excel Source.Outputs[Excel Source Output].Columns[CODE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Country List\Excel Source.Outputs[Excel Source Output].ExternalColumns[CODE]"
+                      length="255"
+                      lineageId="Package\Load Country List\Excel Source.Outputs[Excel Source Output].Columns[CODE]"
+                      name="CODE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Country List\Excel Source.Outputs[Excel Source Output].Columns[Country Name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Country List\Excel Source.Outputs[Excel Source Output].ExternalColumns[Country Name]"
+                      length="255"
+                      lineageId="Package\Load Country List\Excel Source.Outputs[Excel Source Output].Columns[Country Name]"
+                      name="Country Name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Country List\Excel Source.Outputs[Excel Source Output].Columns[Country Name Nederlands]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Country List\Excel Source.Outputs[Excel Source Output].ExternalColumns[Country Name Nederlands]"
+                      length="255"
+                      lineageId="Package\Load Country List\Excel Source.Outputs[Excel Source Output].Columns[Country Name Nederlands]"
+                      name="Country Name Nederlands"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Country List\Excel Source.Outputs[Excel Source Output].Columns[Country Name France]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Country List\Excel Source.Outputs[Excel Source Output].ExternalColumns[Country Name France]"
+                      length="255"
+                      lineageId="Package\Load Country List\Excel Source.Outputs[Excel Source Output].Columns[Country Name France]"
+                      name="Country Name France"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Country List\Excel Source.Outputs[Excel Source Output].Columns[Country Name Poland]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Country List\Excel Source.Outputs[Excel Source Output].ExternalColumns[Country Name Poland]"
+                      length="255"
+                      lineageId="Package\Load Country List\Excel Source.Outputs[Excel Source Output].Columns[Country Name Poland]"
+                      name="Country Name Poland"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Country List\Excel Source.Outputs[Excel Source Output].Columns[Country Name Deutch]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Country List\Excel Source.Outputs[Excel Source Output].ExternalColumns[Country Name Deutch]"
+                      length="255"
+                      lineageId="Package\Load Country List\Excel Source.Outputs[Excel Source Output].Columns[Country Name Deutch]"
+                      name="Country Name Deutch"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Country List\Excel Source.Outputs[Excel Source Output].ExternalColumns[CODE]"
+                      dataType="wstr"
+                      length="255"
+                      name="CODE" />
+                    <externalMetadataColumn
+                      refId="Package\Load Country List\Excel Source.Outputs[Excel Source Output].ExternalColumns[Country Name]"
+                      dataType="wstr"
+                      length="255"
+                      name="Country Name" />
+                    <externalMetadataColumn
+                      refId="Package\Load Country List\Excel Source.Outputs[Excel Source Output].ExternalColumns[Country Name Nederlands]"
+                      dataType="wstr"
+                      length="255"
+                      name="Country Name Nederlands" />
+                    <externalMetadataColumn
+                      refId="Package\Load Country List\Excel Source.Outputs[Excel Source Output].ExternalColumns[Country Name France]"
+                      dataType="wstr"
+                      length="255"
+                      name="Country Name France" />
+                    <externalMetadataColumn
+                      refId="Package\Load Country List\Excel Source.Outputs[Excel Source Output].ExternalColumns[Country Name Poland]"
+                      dataType="wstr"
+                      length="255"
+                      name="Country Name Poland" />
+                    <externalMetadataColumn
+                      refId="Package\Load Country List\Excel Source.Outputs[Excel Source Output].ExternalColumns[Country Name Deutch]"
+                      dataType="wstr"
+                      length="255"
+                      name="Country Name Deutch" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load Country List\Excel Source.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Country List\Excel Source.Outputs[Excel Source Error Output].Columns[CODE]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Load Country List\Excel Source.Outputs[Excel Source Error Output].Columns[CODE]"
+                      name="CODE" />
+                    <outputColumn
+                      refId="Package\Load Country List\Excel Source.Outputs[Excel Source Error Output].Columns[Country Name]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Load Country List\Excel Source.Outputs[Excel Source Error Output].Columns[Country Name]"
+                      name="Country Name" />
+                    <outputColumn
+                      refId="Package\Load Country List\Excel Source.Outputs[Excel Source Error Output].Columns[Country Name Nederlands]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Load Country List\Excel Source.Outputs[Excel Source Error Output].Columns[Country Name Nederlands]"
+                      name="Country Name Nederlands" />
+                    <outputColumn
+                      refId="Package\Load Country List\Excel Source.Outputs[Excel Source Error Output].Columns[Country Name France]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Load Country List\Excel Source.Outputs[Excel Source Error Output].Columns[Country Name France]"
+                      name="Country Name France" />
+                    <outputColumn
+                      refId="Package\Load Country List\Excel Source.Outputs[Excel Source Error Output].Columns[Country Name Poland]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Load Country List\Excel Source.Outputs[Excel Source Error Output].Columns[Country Name Poland]"
+                      name="Country Name Poland" />
+                    <outputColumn
+                      refId="Package\Load Country List\Excel Source.Outputs[Excel Source Error Output].Columns[Country Name Deutch]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Load Country List\Excel Source.Outputs[Excel Source Error Output].Columns[Country Name Deutch]"
+                      name="Country Name Deutch" />
+                    <outputColumn
+                      refId="Package\Load Country List\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Country List\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Country List\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Country List\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Country List\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Countries]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Country List\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="{117A4767-EB31-464C-9853-B06130B7B130}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Extract Staging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load Country List\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Country List\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Country Name]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Country Name"
+                      externalMetadataColumnId="Package\Load Country List\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NAME_ENG]"
+                      lineageId="Package\Load Country List\Excel Source.Outputs[Excel Source Output].Columns[Country Name]" />
+                    <inputColumn
+                      refId="Package\Load Country List\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Country Name Nederlands]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Country Name Nederlands"
+                      externalMetadataColumnId="Package\Load Country List\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NAME_NED]"
+                      lineageId="Package\Load Country List\Excel Source.Outputs[Excel Source Output].Columns[Country Name Nederlands]" />
+                    <inputColumn
+                      refId="Package\Load Country List\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CODE]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="CODE"
+                      externalMetadataColumnId="Package\Load Country List\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[APLHA_2]"
+                      lineageId="Package\Load Country List\Excel Source.Outputs[Excel Source Output].Columns[CODE]" />
+                    <inputColumn
+                      refId="Package\Load Country List\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Country Name Deutch]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Country Name Deutch"
+                      externalMetadataColumnId="Package\Load Country List\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NAME_GER]"
+                      lineageId="Package\Load Country List\Excel Source.Outputs[Excel Source Output].Columns[Country Name Deutch]" />
+                    <inputColumn
+                      refId="Package\Load Country List\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Country Name France]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Country Name France"
+                      externalMetadataColumnId="Package\Load Country List\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NAME_FRA]"
+                      lineageId="Package\Load Country List\Excel Source.Outputs[Excel Source Output].Columns[Country Name France]" />
+                    <inputColumn
+                      refId="Package\Load Country List\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Country Name Poland]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Country Name Poland"
+                      externalMetadataColumnId="Package\Load Country List\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NAME_POL]"
+                      lineageId="Package\Load Country List\Excel Source.Outputs[Excel Source Output].Columns[Country Name Poland]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Country List\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NAME_ENG]"
+                      dataType="wstr"
+                      length="255"
+                      name="NAME_ENG" />
+                    <externalMetadataColumn
+                      refId="Package\Load Country List\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NAME_NED]"
+                      dataType="wstr"
+                      length="255"
+                      name="NAME_NED" />
+                    <externalMetadataColumn
+                      refId="Package\Load Country List\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[APLHA_2]"
+                      dataType="wstr"
+                      length="50"
+                      name="APLHA_2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Country List\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NAME_GER]"
+                      dataType="wstr"
+                      length="255"
+                      name="NAME_GER" />
+                    <externalMetadataColumn
+                      refId="Package\Load Country List\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NAME_FRA]"
+                      dataType="wstr"
+                      length="255"
+                      name="NAME_FRA" />
+                    <externalMetadataColumn
+                      refId="Package\Load Country List\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NAME_POL]"
+                      dataType="wstr"
+                      length="255"
+                      name="NAME_POL" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Country List\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load Country List\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Country List\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Country List\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Country List\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Country List\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load Country List.Paths[Excel Source Output]"
+              endId="Package\Load Country List\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Excel Source Output"
+              startId="Package\Load Country List\Excel Source.Outputs[Excel Source Output]" />
           </paths>
         </pipeline>
       </DTS:ObjectData>
@@ -3628,6 +4034,14 @@
       DTS:ObjectName="Constraint 1"
       DTS:To="Package\Load Ship" />
     <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 11]"
+      DTS:CreationName=""
+      DTS:DTSID="{8DDC32C1-6529-432E-A279-1B4D0B58234F}"
+      DTS:From="Package\Clear Staging Database"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 11"
+      DTS:To="Package\Load Country List" />
+    <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
       DTS:CreationName=""
       DTS:DTSID="{2AF01C75-3E76-4170-80E6-5F1E9C4F9740}"
@@ -3646,7 +4060,7 @@
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
       DTS:CreationName=""
-      DTS:DTSID="{E07B6D3E-1C10-4307-96AE-A8C67FD8F3E3}"
+      DTS:DTSID="{C21FCEDE-B13E-4372-BF89-246AC3AED32B}"
       DTS:From="Package\Clear Staging Database"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 4"
@@ -3696,36 +4110,160 @@
     <LayoutInfo>
       <GraphLayout
         Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="189,42"
-          Id="Package\Clear Staging Database"
-          TopLeft="734,426" />
-        <NodeLayout
-          Size="157,42"
-          Id="Package\Load Consignors"
-          TopLeft="479,320" />
-        <NodeLayout
-          Size="166,42"
-          Id="Package\Load ContainerList"
-          TopLeft="379,421" />
-        <NodeLayout
-          Size="127,42"
-          Id="Package\Load Item"
-          TopLeft="580,245" />
         <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 2]"
-          TopLeft="734,444.5">
+          Id="Package.PrecedenceConstraints[Constraint 11]"
+          TopLeft="718,446.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-189,0"
+              EndConnector="249,0"
               Start="0,0"
-              End="-181.5,0">
+              End="241.5,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="-181.5,0" />
+                    End="241.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="161,42"
+          Id="Package\Load Country List"
+          TopLeft="967,423" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 8]"
+          TopLeft="693.888888888889,428">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="268.611111111111,-30"
+              Start="0,0"
+              End="268.611111111111,-22.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-2.0983606557377" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-2.0983606557377"
+                    Point2="0,-6.0983606557377"
+                    Point3="4,-6.0983606557377" />
+                  <mssgle:LineSegment
+                    End="264.611111111111,-6.0983606557377" />
+                  <mssgle:CubicBezierSegment
+                    Point1="264.611111111111,-6.0983606557377"
+                    Point2="268.611111111111,-6.0983606557377"
+                    Point3="268.611111111111,-10.0983606557377" />
+                  <mssgle:LineSegment
+                    End="268.611111111111,-22.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 7]"
+          TopLeft="673.777777777778,428">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="196.222222222222,-84"
+              Start="0,0"
+              End="196.222222222222,-76.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-22.7777332799359" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-22.7777332799359"
+                    Point2="0,-26.7777332799359"
+                    Point3="4,-26.7777332799359" />
+                  <mssgle:LineSegment
+                    End="192.222222222222,-26.7777332799359" />
+                  <mssgle:CubicBezierSegment
+                    Point1="192.222222222222,-26.7777332799359"
+                    Point2="196.222222222222,-26.7777332799359"
+                    Point3="196.222222222222,-30.7777332799359" />
+                  <mssgle:LineSegment
+                    End="196.222222222222,-76.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 6]"
+          TopLeft="653.666666666667,428">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="133.833333333333,-134"
+              Start="0,0"
+              End="133.833333333333,-126.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-50.2749213011543" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-50.2749213011543"
+                    Point2="0,-54.2749213011543"
+                    Point3="4,-54.2749213011543" />
+                  <mssgle:LineSegment
+                    End="129.833333333333,-54.2749213011543" />
+                  <mssgle:CubicBezierSegment
+                    Point1="129.833333333333,-54.2749213011543"
+                    Point2="133.833333333333,-54.2749213011543"
+                    Point3="133.833333333333,-58.2749213011543" />
+                  <mssgle:LineSegment
+                    End="133.833333333333,-126.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="633.555555555556,428">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="46.9444444444445,-180"
+              Start="0,0"
+              End="46.9444444444445,-172.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-80.9425644209873" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-80.9425644209873"
+                    Point2="0,-84.9425644209873"
+                    Point3="4,-84.9425644209873" />
+                  <mssgle:LineSegment
+                    End="42.9444444444445,-84.9425644209873" />
+                  <mssgle:CubicBezierSegment
+                    Point1="42.9444444444445,-84.9425644209873"
+                    Point2="46.9444444444445,-84.9425644209873"
+                    Point3="46.9444444444445,-88.9425644209873" />
+                  <mssgle:LineSegment
+                    End="46.9444444444445,-172.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -3736,30 +4274,30 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 3]"
-          TopLeft="760.625,426">
+          TopLeft="553.111111111111,428">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-203.125,-64"
+              EndConnector="-243.611111111111,-31"
               Start="0,0"
-              End="-203.125,-56.5">
+              End="-243.611111111111,-23.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,-19.0681114551084" />
+                    End="0,-2.30163934426229" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,-19.0681114551084"
-                    Point2="0,-23.0681114551084"
-                    Point3="-4,-23.0681114551084" />
+                    Point1="0,-2.30163934426229"
+                    Point2="0,-6.30163934426229"
+                    Point3="-4,-6.30163934426229" />
                   <mssgle:LineSegment
-                    End="-199.125,-23.0681114551084" />
+                    End="-239.611111111111,-6.30163934426229" />
                   <mssgle:CubicBezierSegment
-                    Point1="-199.125,-23.0681114551084"
-                    Point2="-203.125,-23.0681114551084"
-                    Point3="-203.125,-27.0681114551084" />
+                    Point1="-239.611111111111,-6.30163934426229"
+                    Point2="-243.611111111111,-6.30163934426229"
+                    Point3="-243.611111111111,-10.3016393442623" />
                   <mssgle:LineSegment
-                    End="-203.125,-56.5" />
+                    End="-243.611111111111,-23.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -3769,31 +4307,19 @@
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 4]"
-          TopLeft="783.25,426">
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="529,447">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-139.75,-139"
+              EndConnector="-234,0"
               Start="0,0"
-              End="-139.75,-131.5">
+              End="-226.5,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,-53.6226086956522" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,-53.6226086956522"
-                    Point2="0,-57.6226086956522"
-                    Point3="-4,-57.6226086956522" />
-                  <mssgle:LineSegment
-                    End="-135.75,-57.6226086956522" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-135.75,-57.6226086956522"
-                    Point2="-139.75,-57.6226086956522"
-                    Point3="-139.75,-61.6226086956522" />
-                  <mssgle:LineSegment
-                    End="-139.75,-131.5" />
+                    End="-226.5,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -3802,62 +4328,32 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="124,42"
-          Id="Package\Load Port"
-          TopLeft="664,178" />
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint]"
-          TopLeft="805.875,426">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-79.875,-206"
-              Start="0,0"
-              End="-79.875,-198.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,-84.9932381667919" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,-84.9932381667919"
-                    Point2="0,-88.9932381667919"
-                    Point3="-4,-88.9932381667919" />
-                  <mssgle:LineSegment
-                    End="-75.875,-88.9932381667919" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-75.875,-88.9932381667919"
-                    Point2="-79.875,-88.9932381667919"
-                    Point3="-79.875,-92.9932381667919" />
-                  <mssgle:LineSegment
-                    End="-79.875,-198.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="125,42"
-          Id="Package\Load Ship"
-          TopLeft="759,117" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="825,426">
+          TopLeft="613.444444444444,428">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,-267"
+              EndConnector="-71.9444444444445,-179"
               Start="0,0"
-              End="0,-259.5">
+              End="-71.9444444444445,-171.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,-259.5" />
+                    End="0,-80.4706612853151" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-80.4706612853151"
+                    Point2="0,-84.4706612853151"
+                    Point3="-4,-84.4706612853151" />
+                  <mssgle:LineSegment
+                    End="-67.9444444444445,-84.4706612853151" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-67.9444444444445,-84.4706612853151"
+                    Point2="-71.9444444444445,-84.4706612853151"
+                    Point3="-71.9444444444445,-88.4706612853151" />
+                  <mssgle:LineSegment
+                    End="-71.9444444444445,-171.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -3866,112 +4362,32 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="149,42"
-          Id="Package\Load Shipment"
-          TopLeft="855,173" />
         <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 5]"
-          TopLeft="851.125,426">
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="593.333333333333,428">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="78.375,-211"
+              EndConnector="-127.333333333333,-130"
               Start="0,0"
-              End="78.375,-203.5">
+              End="-127.333333333333,-122.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,-87.1532682193839" />
+                    End="0,-48.6547743966422" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,-87.1532682193839"
-                    Point2="0,-91.1532682193839"
-                    Point3="4,-91.1532682193839" />
+                    Point1="0,-48.6547743966422"
+                    Point2="0,-52.6547743966422"
+                    Point3="-4,-52.6547743966422" />
                   <mssgle:LineSegment
-                    End="74.375,-91.1532682193839" />
+                    End="-123.333333333333,-52.6547743966422" />
                   <mssgle:CubicBezierSegment
-                    Point1="74.375,-91.1532682193839"
-                    Point2="78.375,-91.1532682193839"
-                    Point3="78.375,-95.1532682193839" />
+                    Point1="-123.333333333333,-52.6547743966422"
+                    Point2="-127.333333333333,-52.6547743966422"
+                    Point3="-127.333333333333,-56.6547743966422" />
                   <mssgle:LineSegment
-                    End="78.375,-203.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="179,42"
-          Id="Package\Load Shipment Detail"
-          TopLeft="952,247" />
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 6]"
-          TopLeft="873.75,426">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="167.75,-137"
-              Start="0,0"
-              End="167.75,-129.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,-53.9373913043478" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,-53.9373913043478"
-                    Point2="0,-57.9373913043478"
-                    Point3="4,-57.9373913043478" />
-                  <mssgle:LineSegment
-                    End="163.75,-57.9373913043478" />
-                  <mssgle:CubicBezierSegment
-                    Point1="163.75,-57.9373913043478"
-                    Point2="167.75,-57.9373913043478"
-                    Point3="167.75,-61.9373913043478" />
-                  <mssgle:LineSegment
-                    End="167.75,-129.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="140,42"
-          Id="Package\Load Voyage"
-          TopLeft="1064,314" />
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 7]"
-          TopLeft="896.375,426">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="237.625,-70"
-              Start="0,0"
-              End="237.625,-62.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,-18.3869969040248" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,-18.3869969040248"
-                    Point2="0,-22.3869969040248"
-                    Point3="4,-22.3869969040248" />
-                  <mssgle:LineSegment
-                    End="233.625,-22.3869969040248" />
-                  <mssgle:CubicBezierSegment
-                    Point1="233.625,-22.3869969040248"
-                    Point2="237.625,-22.3869969040248"
-                    Point3="237.625,-26.3869969040248" />
-                  <mssgle:LineSegment
-                    End="237.625,-62.5" />
+                    End="-127.333333333333,-122.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -3983,21 +4399,69 @@
         <NodeLayout
           Size="159,42"
           Id="Package\Load VoyagePort"
-          TopLeft="1137,422" />
+          TopLeft="883,356" />
+        <NodeLayout
+          Size="140,42"
+          Id="Package\Load Voyage"
+          TopLeft="800,302" />
+        <NodeLayout
+          Size="179,42"
+          Id="Package\Load Shipment Detail"
+          TopLeft="698,252" />
+        <NodeLayout
+          Size="149,42"
+          Id="Package\Load Shipment"
+          TopLeft="606,206" />
+        <NodeLayout
+          Size="125,42"
+          Id="Package\Load Ship"
+          TopLeft="479,207" />
+        <NodeLayout
+          Size="124,42"
+          Id="Package\Load Port"
+          TopLeft="404,256" />
+        <NodeLayout
+          Size="127,42"
+          Id="Package\Load Item"
+          TopLeft="328,305" />
+        <NodeLayout
+          Size="166,42"
+          Id="Package\Load ContainerList"
+          TopLeft="129,424" />
+        <NodeLayout
+          Size="157,42"
+          Id="Package\Load Consignors"
+          TopLeft="231,355" />
+        <NodeLayout
+          Size="189,42"
+          Id="Package\Clear Staging Database"
+          TopLeft="529,428" />
         <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 8]"
-          TopLeft="923,445">
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="573.222222222222,428">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="214,0"
+              EndConnector="-181.722222222222,-81"
               Start="0,0"
-              End="206.5,0">
+              End="-181.722222222222,-73.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="206.5,0" />
+                    End="0,-21.8213856627953" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-21.8213856627953"
+                    Point2="0,-25.8213856627953"
+                    Point3="-4,-25.8213856627953" />
+                  <mssgle:LineSegment
+                    End="-177.722222222222,-25.8213856627953" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-177.722222222222,-25.8213856627953"
+                    Point2="-181.722222222222,-25.8213856627953"
+                    Point3="-181.722222222222,-29.8213856627953" />
+                  <mssgle:LineSegment
+                    End="-181.722222222222,-73.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4013,15 +4477,15 @@
     design-time-name="Package\Load Consignors">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="139,42"
-          Id="Package\Load Consignors\Excel Source"
-          TopLeft="443,137" />
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="171,42"
           Id="Package\Load Consignors\OLE DB Destination"
           TopLeft="429,299" />
+        <NodeLayout
+          Size="139,42"
+          Id="Package\Load Consignors\Excel Source"
+          TopLeft="443,137" />
         <EdgeLayout
           Id="Package\Load Consignors.Paths[Excel Source Output]"
           TopLeft="513.5,179">
@@ -4041,7 +4505,9 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -4060,11 +4526,24 @@
       </Property>
     </Properties>
   </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Consignors\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
   <TaskHost
     design-time-name="Package\Load ContainerList">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="171,42"
           Id="Package\Load ContainerList\OLE DB Destination"
@@ -4092,7 +4571,9 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -4115,7 +4596,7 @@
     design-time-name="Package\Load Item">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="150,42"
           Id="Package\Load Item\OLE DB Source"
@@ -4143,14 +4624,16 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Load Item\OLE DB Source">
+    design-time-name="Package\Load Item\OLE DB Destination">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -4163,7 +4646,7 @@
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Load Consignors\OLE DB Destination">
+    design-time-name="Package\Load Item\OLE DB Source">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -4179,7 +4662,7 @@
     design-time-name="Package\Load Port">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="150,42"
           Id="Package\Load Port\OLE DB Source"
@@ -4219,17 +4702,45 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Port\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Port\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
   <TaskHost
     design-time-name="Package\Load Ship">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="150,42"
           Id="Package\Load Ship\OLE DB Source"
@@ -4257,17 +4768,45 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Ship\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Ship\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
   <TaskHost
     design-time-name="Package\Load Shipment">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="150,42"
           Id="Package\Load Shipment\OLE DB Source"
@@ -4295,25 +4834,53 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Shipment\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Shipment\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
   <TaskHost
     design-time-name="Package\Load Shipment Detail">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="150,42"
-          Id="Package\Load Shipment Detail\OLE DB Source"
-          TopLeft="553,155" />
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="171,42"
           Id="Package\Load Shipment Detail\OLE DB Destination"
           TopLeft="550,284" />
+        <NodeLayout
+          Size="150,42"
+          Id="Package\Load Shipment Detail\OLE DB Source"
+          TopLeft="553,155" />
         <EdgeLayout
           Id="Package\Load Shipment Detail.Paths[OLE DB Source Output]"
           TopLeft="631.75,197">
@@ -4333,25 +4900,53 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Shipment Detail\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Shipment Detail\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
   <TaskHost
     design-time-name="Package\Load Voyage">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="150,42"
-          Id="Package\Load Voyage\OLE DB Source"
-          TopLeft="684,181" />
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="171,42"
           Id="Package\Load Voyage\OLE DB Destination"
           TopLeft="682,309" />
+        <NodeLayout
+          Size="150,42"
+          Id="Package\Load Voyage\OLE DB Source"
+          TopLeft="684,181" />
         <EdgeLayout
           Id="Package\Load Voyage.Paths[OLE DB Source Output]"
           TopLeft="759,223">
@@ -4383,17 +4978,45 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Voyage\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Voyage\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
   <TaskHost
     design-time-name="Package\Load VoyagePort">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="150,42"
           Id="Package\Load VoyagePort\OLE DB Source"
@@ -4433,144 +5056,16 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Load Item\OLE DB Destination">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Load Port\OLE DB Source">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Load Port\OLE DB Destination">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Load Ship\OLE DB Source">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Load Ship\OLE DB Destination">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Load Shipment\OLE DB Source">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Load Shipment\OLE DB Destination">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Load Shipment Detail\OLE DB Source">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Load Shipment Detail\OLE DB Destination">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Load Voyage\OLE DB Source">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Load Voyage\OLE DB Destination">
+    design-time-name="Package\Load VoyagePort\OLE DB Destination">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -4595,8 +5090,59 @@
       </Property>
     </Properties>
   </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Load Country List">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="139,42"
+          Id="Package\Load Country List\Excel Source"
+          TopLeft="631,101" />
+        <NodeLayout
+          Size="171,42"
+          Id="Package\Load Country List\OLE DB Destination"
+          TopLeft="615,244" />
+        <EdgeLayout
+          Id="Package\Load Country List.Paths[Excel Source Output]"
+          TopLeft="700.5,143">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,101"
+              Start="0,0"
+              End="0,93.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,93.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Load VoyagePort\OLE DB Destination">
+    design-time-name="Package\Load Country List\Excel Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Country List\OLE DB Destination">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
