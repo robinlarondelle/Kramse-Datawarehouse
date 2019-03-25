@@ -11,8 +11,8 @@
   DTS:LocaleID="1043"
   DTS:ObjectName="Transform Sources"
   DTS:PackageType="5"
-  DTS:VersionBuild="64"
-  DTS:VersionGUID="{245F47BD-1121-46FD-97B4-325162E9B528}">
+  DTS:VersionBuild="72"
+  DTS:VersionGUID="{2B6F3AD6-9218-4D77-A3DA-3FEC7A7C1E21}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -78,7 +78,7 @@
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{FDF5782B-3B2A-4FDC-A824-455E0D180203}"
-          SQLTask:SqlStatementSource="DELETE FROM VoyagePort&#xA;DELETE FROM Item&#xA;DELETE FROM Shipment&#xA;DELETE FROM Consignor&#xA;DELETE FROM Shipment_Details&#xA;DELETE FROM Voyage&#xA;DELETE FROM Ship&#xA;DELETE FROM Port&#xA;DELETE FROM Containers&#xA;DELETE FROM Countries&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="DELETE FROM VoyagePort&#xA;DELETE FROM Item&#xA;DELETE FROM Shipment&#xA;DELETE FROM Consignor&#xA;DELETE FROM Shipment_Details&#xA;DELETE FROM Voyage&#xA;DELETE FROM Ship&#xA;DELETE FROM Port&#xA;DELETE FROM Containers&#xA;DELETE FROM Countries&#xA;DELETE FROM Calendar&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
@@ -111,6 +111,1666 @@
         <SQLTask:SqlTaskData
           SQLTask:Connection="{FDF5782B-3B2A-4FDC-A824-455E0D180203}"
           SQLTask:SqlStatementSource="DBCC CHECKIDENT (Consignor, RESEED, 0)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Transfer Calendar"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{CCBF123D-4178-4D2F-A5B5-FB8C4D53B0C5}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Transfer Calendar"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Transfer Calendar\Lookup"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Lookup"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from [dbo].[Seasons]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select * from [dbo].[Seasons]) [refTable]
+where [refTable].[MONTH] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="MONTH" dataType="DT_UI1" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SEASON" dataType="DT_WSTR" length="255" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[Month]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Transfer Calendar\Lookup.Connections[OleDbConnection]"
+                  connectionManagerID="{117A4767-EB31-464C-9853-B06130B7B130}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Extract Staging]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Transfer Calendar\Lookup.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Transfer Calendar\Lookup.Inputs[Lookup Input].Columns[Month]"
+                      cachedDataType="ui1"
+                      cachedName="Month"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[Month]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">MONTH</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Transfer Calendar\Lookup.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\Transfer Calendar\Lookup.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Transfer Calendar\Lookup.Outputs[Lookup Match Output].Columns[Season]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Copy Column"
+                      length="255"
+                      lineageId="Package\Transfer Calendar\Lookup.Outputs[Lookup Match Output].Columns[Season]"
+                      name="Season"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">SEASON</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Transfer Calendar\Lookup.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\Transfer Calendar\Lookup.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Transfer Calendar\Lookup.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\Transfer Calendar\Lookup.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Transfer Calendar\Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Transfer Calendar\Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Transfer Calendar\Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Transfer Calendar\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Calendar]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Transfer Calendar\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="{FDF5782B-3B2A-4FDC-A824-455E0D180203}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Transform Staging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[DateKey]"
+                      cachedDataType="i4"
+                      cachedName="DateKey"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DateKey]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[DateKey]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Date]"
+                      cachedDataType="dbDate"
+                      cachedName="Date"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Date]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[Date]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Day]"
+                      cachedDataType="ui1"
+                      cachedName="Day"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Day]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[Day]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[DaySuffix]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="2"
+                      cachedName="DaySuffix"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DaySuffix]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[DaySuffix]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Weekday]"
+                      cachedDataType="ui1"
+                      cachedName="Weekday"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Weekday]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[Weekday]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[WeekDayName]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="WeekDayName"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[WeekDayName]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[WeekDayName]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[WeekDayName_Short]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="3"
+                      cachedName="WeekDayName_Short"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[WeekDayName_Short]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[WeekDayName_Short]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[WeekDayName_FirstLetter]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="1"
+                      cachedName="WeekDayName_FirstLetter"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[WeekDayName_FirstLetter]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[WeekDayName_FirstLetter]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[DOWInMonth]"
+                      cachedDataType="ui1"
+                      cachedName="DOWInMonth"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DOWInMonth]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[DOWInMonth]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[DayOfYear]"
+                      cachedDataType="i2"
+                      cachedName="DayOfYear"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DayOfYear]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[DayOfYear]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[WeekOfMonth]"
+                      cachedDataType="ui1"
+                      cachedName="WeekOfMonth"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[WeekOfMonth]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[WeekOfMonth]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[WeekOfYear]"
+                      cachedDataType="ui1"
+                      cachedName="WeekOfYear"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[WeekOfYear]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[WeekOfYear]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Month]"
+                      cachedDataType="ui1"
+                      cachedName="Month"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Month]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[Month]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[MonthName]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="MonthName"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MonthName]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[MonthName]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[MonthName_Short]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="3"
+                      cachedName="MonthName_Short"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MonthName_Short]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[MonthName_Short]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[MonthName_FirstLetter]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="1"
+                      cachedName="MonthName_FirstLetter"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MonthName_FirstLetter]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[MonthName_FirstLetter]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Quarter]"
+                      cachedDataType="ui1"
+                      cachedName="Quarter"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Quarter]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[Quarter]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[QuarterName]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="6"
+                      cachedName="QuarterName"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[QuarterName]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[QuarterName]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Year]"
+                      cachedDataType="i4"
+                      cachedName="Year"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Year]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[Year]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[MMYYYY]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="6"
+                      cachedName="MMYYYY"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MMYYYY]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[MMYYYY]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[MonthYear]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="7"
+                      cachedName="MonthYear"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MonthYear]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[MonthYear]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[IsWeekend]"
+                      cachedDataType="bool"
+                      cachedName="IsWeekend"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[IsWeekend]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[IsWeekend]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[IsHoliday]"
+                      cachedDataType="bool"
+                      cachedName="IsHoliday"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[IsHoliday]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[IsHoliday]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[HolidayName]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="HolidayName"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[HolidayName]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[HolidayName]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[SpecialDays]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="SpecialDays"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SpecialDays]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[SpecialDays]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[FinancialYear]"
+                      cachedDataType="i4"
+                      cachedName="FinancialYear"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FinancialYear]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[FinancialYear]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[FinancialQuater]"
+                      cachedDataType="i4"
+                      cachedName="FinancialQuater"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FinancialQuater]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[FinancialQuater]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[FinancialMonth]"
+                      cachedDataType="i4"
+                      cachedName="FinancialMonth"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FinancialMonth]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[FinancialMonth]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[FirstDateofYear]"
+                      cachedDataType="dbDate"
+                      cachedName="FirstDateofYear"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FirstDateofYear]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[FirstDateofYear]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[LastDateofYear]"
+                      cachedDataType="dbDate"
+                      cachedName="LastDateofYear"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LastDateofYear]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[LastDateofYear]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[FirstDateofQuater]"
+                      cachedDataType="dbDate"
+                      cachedName="FirstDateofQuater"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FirstDateofQuater]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[FirstDateofQuater]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[LastDateofQuater]"
+                      cachedDataType="dbDate"
+                      cachedName="LastDateofQuater"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LastDateofQuater]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[LastDateofQuater]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[FirstDateofMonth]"
+                      cachedDataType="dbDate"
+                      cachedName="FirstDateofMonth"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FirstDateofMonth]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[FirstDateofMonth]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[LastDateofMonth]"
+                      cachedDataType="dbDate"
+                      cachedName="LastDateofMonth"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LastDateofMonth]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[LastDateofMonth]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[FirstDateofWeek]"
+                      cachedDataType="dbDate"
+                      cachedName="FirstDateofWeek"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FirstDateofWeek]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[FirstDateofWeek]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[LastDateofWeek]"
+                      cachedDataType="dbDate"
+                      cachedName="LastDateofWeek"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LastDateofWeek]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[LastDateofWeek]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CurrentYear]"
+                      cachedDataType="i2"
+                      cachedName="CurrentYear"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CurrentYear]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[CurrentYear]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CurrentQuater]"
+                      cachedDataType="i2"
+                      cachedName="CurrentQuater"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CurrentQuater]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[CurrentQuater]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CurrentMonth]"
+                      cachedDataType="i2"
+                      cachedName="CurrentMonth"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CurrentMonth]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[CurrentMonth]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CurrentWeek]"
+                      cachedDataType="i2"
+                      cachedName="CurrentWeek"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CurrentWeek]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[CurrentWeek]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CurrentDay]"
+                      cachedDataType="i2"
+                      cachedName="CurrentDay"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CurrentDay]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[CurrentDay]" />
+                    <inputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Season]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Season"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Season]"
+                      lineageId="Package\Transfer Calendar\Lookup.Outputs[Lookup Match Output].Columns[Season]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DateKey]"
+                      dataType="i4"
+                      name="DateKey" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Date]"
+                      dataType="dbDate"
+                      name="Date" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Day]"
+                      dataType="ui1"
+                      name="Day" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DaySuffix]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="DaySuffix" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Weekday]"
+                      dataType="ui1"
+                      name="Weekday" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[WeekDayName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="WeekDayName" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[WeekDayName_Short]"
+                      codePage="1252"
+                      dataType="str"
+                      length="3"
+                      name="WeekDayName_Short" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[WeekDayName_FirstLetter]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="WeekDayName_FirstLetter" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DOWInMonth]"
+                      dataType="ui1"
+                      name="DOWInMonth" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DayOfYear]"
+                      dataType="i2"
+                      name="DayOfYear" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[WeekOfMonth]"
+                      dataType="ui1"
+                      name="WeekOfMonth" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[WeekOfYear]"
+                      dataType="ui1"
+                      name="WeekOfYear" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Month]"
+                      dataType="ui1"
+                      name="Month" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MonthName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="MonthName" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MonthName_Short]"
+                      codePage="1252"
+                      dataType="str"
+                      length="3"
+                      name="MonthName_Short" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MonthName_FirstLetter]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="MonthName_FirstLetter" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Quarter]"
+                      dataType="ui1"
+                      name="Quarter" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[QuarterName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="6"
+                      name="QuarterName" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Year]"
+                      dataType="i4"
+                      name="Year" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MMYYYY]"
+                      codePage="1252"
+                      dataType="str"
+                      length="6"
+                      name="MMYYYY" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MonthYear]"
+                      codePage="1252"
+                      dataType="str"
+                      length="7"
+                      name="MonthYear" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Season]"
+                      dataType="wstr"
+                      length="255"
+                      name="Season" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[IsWeekend]"
+                      dataType="bool"
+                      name="IsWeekend" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[IsHoliday]"
+                      dataType="bool"
+                      name="IsHoliday" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[HolidayName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="HolidayName" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SpecialDays]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="SpecialDays" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FinancialYear]"
+                      dataType="i4"
+                      name="FinancialYear" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FinancialQuater]"
+                      dataType="i4"
+                      name="FinancialQuater" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FinancialMonth]"
+                      dataType="i4"
+                      name="FinancialMonth" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FirstDateofYear]"
+                      dataType="dbDate"
+                      name="FirstDateofYear" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LastDateofYear]"
+                      dataType="dbDate"
+                      name="LastDateofYear" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FirstDateofQuater]"
+                      dataType="dbDate"
+                      name="FirstDateofQuater" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LastDateofQuater]"
+                      dataType="dbDate"
+                      name="LastDateofQuater" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FirstDateofMonth]"
+                      dataType="dbDate"
+                      name="FirstDateofMonth" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LastDateofMonth]"
+                      dataType="dbDate"
+                      name="LastDateofMonth" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FirstDateofWeek]"
+                      dataType="dbDate"
+                      name="FirstDateofWeek" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LastDateofWeek]"
+                      dataType="dbDate"
+                      name="LastDateofWeek" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CurrentYear]"
+                      dataType="i2"
+                      name="CurrentYear" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CurrentQuater]"
+                      dataType="i2"
+                      name="CurrentQuater" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CurrentMonth]"
+                      dataType="i2"
+                      name="CurrentMonth" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CurrentWeek]"
+                      dataType="i2"
+                      name="CurrentWeek" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CurrentDay]"
+                      dataType="i2"
+                      name="CurrentDay" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Transfer Calendar\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Transfer Calendar\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Transfer Calendar\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Transfer Calendar\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Calendar]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Transfer Calendar\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="{117A4767-EB31-464C-9853-B06130B7B130}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Extract Staging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[DateKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[DateKey]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[DateKey]"
+                      name="DateKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[Date]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Date]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[Date]"
+                      name="Date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[Day]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Day]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[Day]"
+                      name="Day"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[DaySuffix]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[DaySuffix]"
+                      length="2"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[DaySuffix]"
+                      name="DaySuffix"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[Weekday]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Weekday]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[Weekday]"
+                      name="Weekday"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[WeekDayName]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[WeekDayName]"
+                      length="10"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[WeekDayName]"
+                      name="WeekDayName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[WeekDayName_Short]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[WeekDayName_Short]"
+                      length="3"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[WeekDayName_Short]"
+                      name="WeekDayName_Short"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[WeekDayName_FirstLetter]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[WeekDayName_FirstLetter]"
+                      length="1"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[WeekDayName_FirstLetter]"
+                      name="WeekDayName_FirstLetter"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[DOWInMonth]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[DOWInMonth]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[DOWInMonth]"
+                      name="DOWInMonth"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[DayOfYear]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[DayOfYear]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[DayOfYear]"
+                      name="DayOfYear"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[WeekOfMonth]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[WeekOfMonth]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[WeekOfMonth]"
+                      name="WeekOfMonth"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[WeekOfYear]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[WeekOfYear]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[WeekOfYear]"
+                      name="WeekOfYear"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[Month]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Month]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[Month]"
+                      name="Month"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[MonthName]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MonthName]"
+                      length="10"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[MonthName]"
+                      name="MonthName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[MonthName_Short]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MonthName_Short]"
+                      length="3"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[MonthName_Short]"
+                      name="MonthName_Short"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[MonthName_FirstLetter]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MonthName_FirstLetter]"
+                      length="1"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[MonthName_FirstLetter]"
+                      name="MonthName_FirstLetter"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[Quarter]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Quarter]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[Quarter]"
+                      name="Quarter"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[QuarterName]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[QuarterName]"
+                      length="6"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[QuarterName]"
+                      name="QuarterName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[Year]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Year]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[Year]"
+                      name="Year"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[MMYYYY]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MMYYYY]"
+                      length="6"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[MMYYYY]"
+                      name="MMYYYY"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[MonthYear]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MonthYear]"
+                      length="7"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[MonthYear]"
+                      name="MonthYear"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[IsWeekend]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[IsWeekend]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[IsWeekend]"
+                      name="IsWeekend"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[IsHoliday]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[IsHoliday]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[IsHoliday]"
+                      name="IsHoliday"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[HolidayName]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[HolidayName]"
+                      length="20"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[HolidayName]"
+                      name="HolidayName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[SpecialDays]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[SpecialDays]"
+                      length="20"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[SpecialDays]"
+                      name="SpecialDays"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[FinancialYear]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FinancialYear]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[FinancialYear]"
+                      name="FinancialYear"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[FinancialQuater]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FinancialQuater]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[FinancialQuater]"
+                      name="FinancialQuater"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[FinancialMonth]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FinancialMonth]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[FinancialMonth]"
+                      name="FinancialMonth"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[FirstDateofYear]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FirstDateofYear]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[FirstDateofYear]"
+                      name="FirstDateofYear"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[LastDateofYear]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[LastDateofYear]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[LastDateofYear]"
+                      name="LastDateofYear"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[FirstDateofQuater]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FirstDateofQuater]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[FirstDateofQuater]"
+                      name="FirstDateofQuater"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[LastDateofQuater]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[LastDateofQuater]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[LastDateofQuater]"
+                      name="LastDateofQuater"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[FirstDateofMonth]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FirstDateofMonth]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[FirstDateofMonth]"
+                      name="FirstDateofMonth"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[LastDateofMonth]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[LastDateofMonth]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[LastDateofMonth]"
+                      name="LastDateofMonth"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[FirstDateofWeek]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FirstDateofWeek]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[FirstDateofWeek]"
+                      name="FirstDateofWeek"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[LastDateofWeek]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[LastDateofWeek]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[LastDateofWeek]"
+                      name="LastDateofWeek"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[CurrentYear]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CurrentYear]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[CurrentYear]"
+                      name="CurrentYear"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[CurrentQuater]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CurrentQuater]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[CurrentQuater]"
+                      name="CurrentQuater"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[CurrentMonth]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CurrentMonth]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[CurrentMonth]"
+                      name="CurrentMonth"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[CurrentWeek]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CurrentWeek]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[CurrentWeek]"
+                      name="CurrentWeek"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[CurrentDay]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CurrentDay]"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].Columns[CurrentDay]"
+                      name="CurrentDay"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[DateKey]"
+                      dataType="i4"
+                      name="DateKey" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Date]"
+                      dataType="dbDate"
+                      name="Date" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Day]"
+                      dataType="ui1"
+                      name="Day" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[DaySuffix]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="DaySuffix" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Weekday]"
+                      dataType="ui1"
+                      name="Weekday" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[WeekDayName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="WeekDayName" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[WeekDayName_Short]"
+                      codePage="1252"
+                      dataType="str"
+                      length="3"
+                      name="WeekDayName_Short" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[WeekDayName_FirstLetter]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="WeekDayName_FirstLetter" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[DOWInMonth]"
+                      dataType="ui1"
+                      name="DOWInMonth" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[DayOfYear]"
+                      dataType="i2"
+                      name="DayOfYear" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[WeekOfMonth]"
+                      dataType="ui1"
+                      name="WeekOfMonth" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[WeekOfYear]"
+                      dataType="ui1"
+                      name="WeekOfYear" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Month]"
+                      dataType="ui1"
+                      name="Month" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MonthName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="MonthName" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MonthName_Short]"
+                      codePage="1252"
+                      dataType="str"
+                      length="3"
+                      name="MonthName_Short" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MonthName_FirstLetter]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="MonthName_FirstLetter" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Quarter]"
+                      dataType="ui1"
+                      name="Quarter" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[QuarterName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="6"
+                      name="QuarterName" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Year]"
+                      dataType="i4"
+                      name="Year" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MMYYYY]"
+                      codePage="1252"
+                      dataType="str"
+                      length="6"
+                      name="MMYYYY" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MonthYear]"
+                      codePage="1252"
+                      dataType="str"
+                      length="7"
+                      name="MonthYear" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[IsWeekend]"
+                      dataType="bool"
+                      name="IsWeekend" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[IsHoliday]"
+                      dataType="bool"
+                      name="IsHoliday" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[HolidayName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="HolidayName" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[SpecialDays]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="SpecialDays" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FinancialYear]"
+                      dataType="i4"
+                      name="FinancialYear" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FinancialQuater]"
+                      dataType="i4"
+                      name="FinancialQuater" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FinancialMonth]"
+                      dataType="i4"
+                      name="FinancialMonth" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FirstDateofYear]"
+                      dataType="dbDate"
+                      name="FirstDateofYear" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[LastDateofYear]"
+                      dataType="dbDate"
+                      name="LastDateofYear" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FirstDateofQuater]"
+                      dataType="dbDate"
+                      name="FirstDateofQuater" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[LastDateofQuater]"
+                      dataType="dbDate"
+                      name="LastDateofQuater" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FirstDateofMonth]"
+                      dataType="dbDate"
+                      name="FirstDateofMonth" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[LastDateofMonth]"
+                      dataType="dbDate"
+                      name="LastDateofMonth" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FirstDateofWeek]"
+                      dataType="dbDate"
+                      name="FirstDateofWeek" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[LastDateofWeek]"
+                      dataType="dbDate"
+                      name="LastDateofWeek" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CurrentYear]"
+                      dataType="i2"
+                      name="CurrentYear" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CurrentQuater]"
+                      dataType="i2"
+                      name="CurrentQuater" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CurrentMonth]"
+                      dataType="i2"
+                      name="CurrentMonth" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CurrentWeek]"
+                      dataType="i2"
+                      name="CurrentWeek" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CurrentDay]"
+                      dataType="i2"
+                      name="CurrentDay" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[DateKey]"
+                      dataType="i4"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[DateKey]"
+                      name="DateKey" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Date]"
+                      dataType="dbDate"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Date]"
+                      name="Date" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Day]"
+                      dataType="ui1"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Day]"
+                      name="Day" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[DaySuffix]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[DaySuffix]"
+                      name="DaySuffix" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Weekday]"
+                      dataType="ui1"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Weekday]"
+                      name="Weekday" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[WeekDayName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[WeekDayName]"
+                      name="WeekDayName" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[WeekDayName_Short]"
+                      codePage="1252"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[WeekDayName_Short]"
+                      name="WeekDayName_Short" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[WeekDayName_FirstLetter]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[WeekDayName_FirstLetter]"
+                      name="WeekDayName_FirstLetter" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[DOWInMonth]"
+                      dataType="ui1"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[DOWInMonth]"
+                      name="DOWInMonth" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[DayOfYear]"
+                      dataType="i2"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[DayOfYear]"
+                      name="DayOfYear" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[WeekOfMonth]"
+                      dataType="ui1"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[WeekOfMonth]"
+                      name="WeekOfMonth" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[WeekOfYear]"
+                      dataType="ui1"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[WeekOfYear]"
+                      name="WeekOfYear" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Month]"
+                      dataType="ui1"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Month]"
+                      name="Month" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MonthName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MonthName]"
+                      name="MonthName" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MonthName_Short]"
+                      codePage="1252"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MonthName_Short]"
+                      name="MonthName_Short" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MonthName_FirstLetter]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MonthName_FirstLetter]"
+                      name="MonthName_FirstLetter" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Quarter]"
+                      dataType="ui1"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Quarter]"
+                      name="Quarter" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[QuarterName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="6"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[QuarterName]"
+                      name="QuarterName" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Year]"
+                      dataType="i4"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Year]"
+                      name="Year" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MMYYYY]"
+                      codePage="1252"
+                      dataType="str"
+                      length="6"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MMYYYY]"
+                      name="MMYYYY" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MonthYear]"
+                      codePage="1252"
+                      dataType="str"
+                      length="7"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MonthYear]"
+                      name="MonthYear" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[IsWeekend]"
+                      dataType="bool"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[IsWeekend]"
+                      name="IsWeekend" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[IsHoliday]"
+                      dataType="bool"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[IsHoliday]"
+                      name="IsHoliday" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[HolidayName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[HolidayName]"
+                      name="HolidayName" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[SpecialDays]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[SpecialDays]"
+                      name="SpecialDays" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FinancialYear]"
+                      dataType="i4"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FinancialYear]"
+                      name="FinancialYear" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FinancialQuater]"
+                      dataType="i4"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FinancialQuater]"
+                      name="FinancialQuater" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FinancialMonth]"
+                      dataType="i4"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FinancialMonth]"
+                      name="FinancialMonth" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FirstDateofYear]"
+                      dataType="dbDate"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FirstDateofYear]"
+                      name="FirstDateofYear" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[LastDateofYear]"
+                      dataType="dbDate"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[LastDateofYear]"
+                      name="LastDateofYear" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FirstDateofQuater]"
+                      dataType="dbDate"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FirstDateofQuater]"
+                      name="FirstDateofQuater" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[LastDateofQuater]"
+                      dataType="dbDate"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[LastDateofQuater]"
+                      name="LastDateofQuater" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FirstDateofMonth]"
+                      dataType="dbDate"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FirstDateofMonth]"
+                      name="FirstDateofMonth" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[LastDateofMonth]"
+                      dataType="dbDate"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[LastDateofMonth]"
+                      name="LastDateofMonth" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FirstDateofWeek]"
+                      dataType="dbDate"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FirstDateofWeek]"
+                      name="FirstDateofWeek" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[LastDateofWeek]"
+                      dataType="dbDate"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[LastDateofWeek]"
+                      name="LastDateofWeek" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CurrentYear]"
+                      dataType="i2"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CurrentYear]"
+                      name="CurrentYear" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CurrentQuater]"
+                      dataType="i2"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CurrentQuater]"
+                      name="CurrentQuater" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CurrentMonth]"
+                      dataType="i2"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CurrentMonth]"
+                      name="CurrentMonth" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CurrentWeek]"
+                      dataType="i2"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CurrentWeek]"
+                      name="CurrentWeek" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CurrentDay]"
+                      dataType="i2"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CurrentDay]"
+                      name="CurrentDay" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Transfer Calendar.Paths[Lookup Match Output]"
+              endId="Package\Transfer Calendar\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Lookup Match Output"
+              startId="Package\Transfer Calendar\Lookup.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Transfer Calendar.Paths[OLE DB Source Output]"
+              endId="Package\Transfer Calendar\Lookup.Inputs[Lookup Input]"
+              name="OLE DB Source Output"
+              startId="Package\Transfer Calendar\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
@@ -5045,11 +6705,11 @@
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 12]"
       DTS:CreationName=""
-      DTS:DTSID="{E3A6ED85-2AC5-4617-8A02-2FFD607EDE0E}"
+      DTS:DTSID="{0853E4A5-84F7-4E69-BE67-03F661B14A7D}"
       DTS:From="Package\Transfer Port"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 12"
-      DTS:To="Package\Transfer Voyage" />
+      DTS:To="Package\Transfer Calendar" />
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 13]"
       DTS:CreationName=""
@@ -5061,11 +6721,11 @@
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 14]"
       DTS:CreationName=""
-      DTS:DTSID="{9B56D8A6-13AD-45AF-BD30-1F92BF46AED2}"
+      DTS:DTSID="{1B392167-09ED-4AD3-B320-48A3B9E194F1}"
       DTS:From="Package\Transfer Ship"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 14"
-      DTS:To="Package\Transfer Voyage" />
+      DTS:To="Package\Transfer Calendar" />
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 15]"
       DTS:CreationName=""
@@ -5106,6 +6766,14 @@
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 2"
       DTS:To="Package\Change ship country" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 20]"
+      DTS:CreationName=""
+      DTS:DTSID="{E8234EAA-D299-4B90-9FE8-0A1ADE226091}"
+      DTS:From="Package\Transfer Calendar"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 20"
+      DTS:To="Package\Transfer Voyage" />
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
       DTS:CreationName=""
@@ -5178,15 +6846,15 @@
         <NodeLayout
           Size="209,42"
           Id="Package\Change Consignors Country"
-          TopLeft="31,161" />
+          TopLeft="28,170" />
         <NodeLayout
           Size="177,42"
           Id="Package\Change Port Country"
-          TopLeft="269.75,232.25" />
+          TopLeft="266.75,241.25" />
         <NodeLayout
           Size="175,42"
           Id="Package\Change ship country"
-          TopLeft="486.25,236.5" />
+          TopLeft="480.25,169.5" />
         <NodeLayout
           Size="189,42"
           Id="Package\Clear Staging Database"
@@ -5194,11 +6862,11 @@
         <NodeLayout
           Size="219,42"
           Id="Package\Filter NULL Values Consignors"
-          TopLeft="26,229" />
+          TopLeft="23,238" />
         <NodeLayout
           Size="173,42"
           Id="Package\Transfer Consignors"
-          TopLeft="48,301.25" />
+          TopLeft="45,310.25" />
         <NodeLayout
           Size="171,42"
           Id="Package\Transfer Containers"
@@ -5206,7 +6874,7 @@
         <NodeLayout
           Size="166,42"
           Id="Package\Transfer Countries"
-          TopLeft="281,92.75" />
+          TopLeft="278,101.75" />
         <NodeLayout
           Size="144,42"
           Id="Package\Transfer Item"
@@ -5214,30 +6882,30 @@
         <NodeLayout
           Size="141,42"
           Id="Package\Transfer Port"
-          TopLeft="286.25,302.25" />
+          TopLeft="283.25,311.25" />
         <NodeLayout
           Size="142,42"
           Id="Package\Transfer Ship"
-          TopLeft="508.25,302.5" />
+          TopLeft="496.25,235.5" />
         <NodeLayout
           Size="166,42"
           Id="Package\Transfer Shipment"
-          TopLeft="69.2500000000001,402.25" />
+          TopLeft="75.2500000000001,437.25" />
         <NodeLayout
           Size="199,42"
           Id="Package\Transfer Shipment_Detail"
-          TopLeft="464,96.5" />
+          TopLeft="471,101.5" />
         <NodeLayout
           Size="156,42"
           Id="Package\Transfer Voyage"
-          TopLeft="484,397.75" />
+          TopLeft="485,435.75" />
         <NodeLayout
           Size="175,42"
           Id="Package\Transfer VoyagePort"
-          TopLeft="276.75,380" />
+          TopLeft="263.75,410" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
-          TopLeft="576.5,278.5">
+          TopLeft="567.5,211.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -5259,18 +6927,18 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="363.875,65.75">
+          TopLeft="362.375,65.75">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,27"
+              EndConnector="0,36"
               Start="0,0"
-              End="0,19.5">
+              End="0,28.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,19.5" />
+                    End="0,28.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -5281,18 +6949,18 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 11]"
-          TopLeft="565.625,72.5">
+          TopLeft="569.125,72.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,24"
+              EndConnector="0,29"
               Start="0,0"
-              End="0,16.5">
+              End="0,21.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,16.5" />
+                    End="0,21.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -5303,30 +6971,30 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 2]"
-          TopLeft="390.333333333333,134.75">
+          TopLeft="387.333333333333,143.75">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="183.416666666667,101.75"
+              EndConnector="180.416666666667,25.7500000000001"
               Start="0,0"
-              End="183.416666666667,94.2500000000001">
+              End="180.416666666667,18.2500000000001">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,37.282816229117" />
+                    End="0,6.44749403341294" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,37.282816229117"
-                    Point2="0,41.282816229117"
-                    Point3="4,41.282816229117" />
+                    Point1="0,6.44749403341294"
+                    Point2="0,10.4474940334129"
+                    Point3="4,10.4474940334129" />
                   <mssgle:LineSegment
-                    End="179.416666666667,41.282816229117" />
+                    End="176.416666666667,10.4474940334129" />
                   <mssgle:CubicBezierSegment
-                    Point1="179.416666666667,41.282816229117"
-                    Point2="183.416666666667,41.282816229117"
-                    Point3="183.416666666667,45.282816229117" />
+                    Point1="176.416666666667,10.4474940334129"
+                    Point2="180.416666666667,10.4474940334129"
+                    Point3="180.416666666667,14.4474940334129" />
                   <mssgle:LineSegment
-                    End="183.416666666667,94.2500000000001" />
+                    End="180.416666666667,18.2500000000001" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -5337,7 +7005,7 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 6]"
-          TopLeft="356.958333333333,134.75">
+          TopLeft="353.958333333333,143.75">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -5359,7 +7027,7 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 7]"
-          TopLeft="357.5,274.25">
+          TopLeft="354.5,283.25">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -5425,64 +7093,30 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 10]"
-          TopLeft="323.5,344.25">
+          TopLeft="331.583333333333,353.25">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-144.916666666667,58"
+              EndConnector="-147,84"
               Start="0,0"
-              End="-144.916666666667,50.5">
+              End="-147,76.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,21.3037711221646" />
+                    End="0,38.0874271440466" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,21.3037711221646"
-                    Point2="0,25.3037711221646"
-                    Point3="-4,25.3037711221646" />
+                    Point1="0,38.0874271440466"
+                    Point2="0,42.0874271440466"
+                    Point3="-4,42.0874271440466" />
                   <mssgle:LineSegment
-                    End="-140.916666666667,25.3037711221646" />
+                    End="-143,42.0874271440466" />
                   <mssgle:CubicBezierSegment
-                    Point1="-140.916666666667,25.3037711221646"
-                    Point2="-144.916666666667,25.3037711221646"
-                    Point3="-144.916666666667,29.3037711221646" />
+                    Point1="-143,42.0874271440466"
+                    Point2="-147,42.0874271440466"
+                    Point3="-147,46.0874271440466" />
                   <mssgle:LineSegment
-                    End="-144.916666666667,50.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 12]"
-          TopLeft="378.916666666667,344.25">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="158.416666666667,53.5"
-              Start="0,0"
-              End="158.416666666667,46">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,22.7855245683931" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,22.7855245683931"
-                    Point2="0,26.7855245683931"
-                    Point3="4,26.7855245683931" />
-                  <mssgle:LineSegment
-                    End="154.416666666667,26.7855245683931" />
-                  <mssgle:CubicBezierSegment
-                    Point1="154.416666666667,26.7855245683931"
-                    Point2="158.416666666667,26.7855245683931"
-                    Point3="158.416666666667,30.7855245683931" />
-                  <mssgle:LineSegment
-                    End="158.416666666667,46" />
+                    End="-147,76.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -5493,40 +7127,18 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 13]"
-          TopLeft="360.5,344.25">
+          TopLeft="351.583333333333,353.25">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,35.7500000000001"
+              EndConnector="0,56.7500000000001"
               Start="0,0"
-              End="0,28.2500000000001">
+              End="0,49.2500000000001">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,28.2500000000001" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 14]"
-          TopLeft="582.958333333333,344.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,53.25"
-              Start="0,0"
-              End="0,45.75">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,45.75" />
+                    End="0,49.2500000000001" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -5537,18 +7149,18 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 15]"
-          TopLeft="484,423.833333333333">
+          TopLeft="485,460.333333333333">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-248.75,0"
+              EndConnector="-243.75,0"
               Start="0,0"
-              End="-241.25,0">
+              End="-236.25,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="-241.25,0" />
+                    End="-236.25,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -5559,18 +7171,30 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 16]"
-          TopLeft="484,403.375">
+          TopLeft="485,451.083333333333">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-32.25,0"
+              EndConnector="-46.25,-20.0833333333333"
               Start="0,0"
-              End="-24.75,0">
+              End="-38.75,-20.0833333333333">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="-24.75,0" />
+                    End="-15.5183486238532,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-15.5183486238532,0"
+                    Point2="-19.5183486238532,0"
+                    Point3="-19.5183486238532,-4" />
+                  <mssgle:LineSegment
+                    End="-19.5183486238532,-16.0833333333333" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-19.5183486238532,-16.0833333333333"
+                    Point2="-19.5183486238532,-20.0833333333333"
+                    Point3="-23.5183486238532,-20.0833333333333" />
+                  <mssgle:LineSegment
+                    End="-38.75,-20.0833333333333" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -5581,30 +7205,18 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 17]"
-          TopLeft="134.5,343.25">
+          TopLeft="131.708333333333,352.25">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-8.58333333333323,59"
+              EndConnector="0,85"
               Start="0,0"
-              End="-8.58333333333323,51.5">
+              End="0,77.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,31.0620525059666" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,31.0620525059666"
-                    Point2="0,35.0620525059666"
-                    Point3="-4,35.0620525059666" />
-                  <mssgle:LineSegment
-                    End="-4.58333333333323,35.0620525059666" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-4.58333333333323,35.0620525059666"
-                    Point2="-8.58333333333323,35.0620525059666"
-                    Point3="-8.58333333333323,39.0620525059666" />
-                  <mssgle:LineSegment
-                    End="-8.58333333333323,51.5" />
+                    End="0,77.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -5615,7 +7227,7 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 4]"
-          TopLeft="135.5,203">
+          TopLeft="132.5,212">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -5637,7 +7249,7 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 5]"
-          TopLeft="135,271">
+          TopLeft="132,280">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -5660,10 +7272,10 @@
         <NodeLayout
           Size="143,42"
           Id="Package\Reset Row ID"
-          TopLeft="67.25,95" />
+          TopLeft="64.25,104" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 3]"
-          TopLeft="281,114.875">
+          TopLeft="278,123.875">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -5685,7 +7297,7 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 18]"
-          TopLeft="137.125,137">
+          TopLeft="134.125,146">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -5697,6 +7309,76 @@
                   Capacity="5">
                   <mssgle:LineSegment
                     End="0,16.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="163,42"
+          Id="Package\Transfer Calendar"
+          TopLeft="478,314" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 20]"
+          TopLeft="561.25,356">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,79.7500000000001"
+              Start="0,0"
+              End="0,72.2500000000001">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,72.2500000000001" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 14]"
+          TopLeft="563.375,277.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,36.4999999999999"
+              Start="0,0"
+              End="0,28.9999999999999">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.9999999999999" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 12]"
+          TopLeft="424.25,333.625">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="53.75,0"
+              Start="0,0"
+              End="46.25,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="46.25,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -6637,6 +8319,121 @@
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
     design-time-name="Package\Transfer Consignors\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Transfer Calendar">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="150,42"
+          Id="Package\Transfer Calendar\OLE DB Source"
+          TopLeft="643,181" />
+        <NodeLayout
+          Size="113,42"
+          Id="Package\Transfer Calendar\Lookup"
+          TopLeft="658,311" />
+        <EdgeLayout
+          Id="Package\Transfer Calendar.Paths[OLE DB Source Output]"
+          TopLeft="716.25,223">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,88"
+              Start="0,0"
+              End="0,80.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,80.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="171,42"
+          Id="Package\Transfer Calendar\OLE DB Destination"
+          TopLeft="628,410" />
+        <EdgeLayout
+          Id="Package\Transfer Calendar.Paths[Lookup Match Output]"
+          TopLeft="714,353">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,57"
+              Start="0,0"
+              End="0,49.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,49.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,18.9453125,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Transfer Calendar\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Transfer Calendar\Lookup">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[Seasons]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Transfer Calendar\OLE DB Destination">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>

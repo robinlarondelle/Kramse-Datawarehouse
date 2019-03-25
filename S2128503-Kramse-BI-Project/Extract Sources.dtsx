@@ -11,8 +11,8 @@
   DTS:LocaleID="1043"
   DTS:ObjectName="Extract Sources"
   DTS:PackageType="5"
-  DTS:VersionBuild="99"
-  DTS:VersionGUID="{670E5B4D-13DF-4C02-B0D4-5DBE93F8B3AE}">
+  DTS:VersionBuild="106"
+  DTS:VersionGUID="{8758000A-21ED-401F-B90D-17757CAC1ADF}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -30,7 +30,23 @@
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{117A4767-EB31-464C-9853-B06130B7B130}"
-          SQLTask:SqlStatementSource="DELETE FROM Consignor&#xA;DELETE FROM Containers&#xA;DELETE FROM Item&#xA;DELETE FROM [s2128503_Project1].[dbo].[Port]&#xA;DELETE FROM Ship&#xA;DELETE FROM Countries&#xA;DELETE FROM Shipment&#xA;DELETE FROM Shipment_Details&#xA;DELETE FROM Voyage&#xA;DELETE FROM VoyagePort&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="DELETE FROM Consignor&#xA;DELETE FROM Containers&#xA;DELETE FROM Item&#xA;DELETE FROM [s2128503_Project1].[dbo].[Port]&#xA;DELETE FROM Ship&#xA;DELETE FROM Countries&#xA;DELETE FROM Shipment&#xA;DELETE FROM Shipment_Details&#xA;DELETE FROM Voyage&#xA;DELETE FROM VoyagePort&#xA;DELETE FROM Seasons&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load Calendar"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{B8B26932-76BD-47A1-818D-49E2E79736C5}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Calendar"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{117A4767-EB31-464C-9853-B06130B7B130}"
+          SQLTask:SqlStatementSource="SET NOCOUNT ON&#xA;&#xA;TRUNCATE TABLE Calendar&#xA;&#xA;DECLARE @CurrentDate DATE = '2010-01-01'&#xA;DECLARE @EndDate DATE = '2020-12-31'&#xA;&#xA;WHILE @CurrentDate &lt; @EndDate&#xA;BEGIN&#xA;   INSERT INTO [dbo].[Calendar] (&#xA;      [DateKey],&#xA;      [Date],&#xA;      [Day],&#xA;      [DaySuffix],&#xA;      [Weekday],&#xA;      [WeekDayName],&#xA;      [WeekDayName_Short],&#xA;      [WeekDayName_FirstLetter],&#xA;      [DOWInMonth],&#xA;      [DayOfYear],&#xA;      [WeekOfMonth],&#xA;      [WeekOfYear],&#xA;      [Month],&#xA;      [MonthName],&#xA;      [MonthName_Short],&#xA;      [MonthName_FirstLetter],&#xA;      [Quarter],&#xA;      [QuarterName],&#xA;      [Year],&#xA;      [MMYYYY],&#xA;      [MonthYear],&#xA;      [IsWeekend],&#xA;      [IsHoliday],&#xA;      [FirstDateofYear],&#xA;      [LastDateofYear],&#xA;      [FirstDateofQuater],&#xA;      [LastDateofQuater],&#xA;      [FirstDateofMonth],&#xA;      [LastDateofMonth],&#xA;      [FirstDateofWeek],&#xA;      [LastDateofWeek]&#xA;      )&#xA;   SELECT DateKey = YEAR(@CurrentDate) * 10000 + MONTH(@CurrentDate) * 100 + DAY(@CurrentDate),&#xA;      DATE = @CurrentDate,&#xA;      Day = DAY(@CurrentDate),&#xA;      [DaySuffix] = CASE &#xA;         WHEN DAY(@CurrentDate) = 1&#xA;            OR DAY(@CurrentDate) = 21&#xA;            OR DAY(@CurrentDate) = 31&#xA;            THEN 'st'&#xA;         WHEN DAY(@CurrentDate) = 2&#xA;            OR DAY(@CurrentDate) = 22&#xA;            THEN 'nd'&#xA;         WHEN DAY(@CurrentDate) = 3&#xA;            OR DAY(@CurrentDate) = 23&#xA;            THEN 'rd'&#xA;         ELSE 'th'&#xA;         END,&#xA;      WEEKDAY = DATEPART(dw, @CurrentDate),&#xA;      WeekDayName = DATENAME(dw, @CurrentDate),&#xA;      WeekDayName_Short = UPPER(LEFT(DATENAME(dw, @CurrentDate), 3)),&#xA;      WeekDayName_FirstLetter = LEFT(DATENAME(dw, @CurrentDate), 1),&#xA;      [DOWInMonth] = DAY(@CurrentDate),&#xA;      [DayOfYear] = DATENAME(dy, @CurrentDate),&#xA;      [WeekOfMonth] = DATEPART(WEEK, @CurrentDate) - DATEPART(WEEK, DATEADD(MM, DATEDIFF(MM, 0, @CurrentDate), 0)) + 1,&#xA;      [WeekOfYear] = DATEPART(wk, @CurrentDate),&#xA;      [Month] = MONTH(@CurrentDate),&#xA;      [MonthName] = DATENAME(mm, @CurrentDate),&#xA;      [MonthName_Short] = UPPER(LEFT(DATENAME(mm, @CurrentDate), 3)),&#xA;      [MonthName_FirstLetter] = LEFT(DATENAME(mm, @CurrentDate), 1),&#xA;      [Quarter] = DATEPART(q, @CurrentDate),&#xA;      [QuarterName] = CASE &#xA;         WHEN DATENAME(qq, @CurrentDate) = 1&#xA;            THEN 'First'&#xA;         WHEN DATENAME(qq, @CurrentDate) = 2&#xA;            THEN 'second'&#xA;         WHEN DATENAME(qq, @CurrentDate) = 3&#xA;            THEN 'third'&#xA;         WHEN DATENAME(qq, @CurrentDate) = 4&#xA;            THEN 'fourth'&#xA;         END,&#xA;      [Year] = YEAR(@CurrentDate),&#xA;      [MMYYYY] = RIGHT('0' + CAST(MONTH(@CurrentDate) AS VARCHAR(2)), 2) + CAST(YEAR(@CurrentDate) AS VARCHAR(4)),&#xA;      [MonthYear] = CAST(YEAR(@CurrentDate) AS VARCHAR(4)) + UPPER(LEFT(DATENAME(mm, @CurrentDate), 3)),&#xA;      [IsWeekend] = CASE &#xA;         WHEN DATENAME(dw, @CurrentDate) = 'Sunday'&#xA;            OR DATENAME(dw, @CurrentDate) = 'Saturday'&#xA;            THEN 1&#xA;         ELSE 0&#xA;         END,&#xA;      [IsHoliday] = 0,&#xA;      [FirstDateofYear] = CAST(CAST(YEAR(@CurrentDate) AS VARCHAR(4)) + '-01-01' AS DATE),&#xA;      [LastDateofYear] = CAST(CAST(YEAR(@CurrentDate) AS VARCHAR(4)) + '-12-31' AS DATE),&#xA;      [FirstDateofQuater] = DATEADD(qq, DATEDIFF(qq, 0, GETDATE()), 0),&#xA;      [LastDateofQuater] = DATEADD(dd, - 1, DATEADD(qq, DATEDIFF(qq, 0, GETDATE()) + 1, 0)),&#xA;      [FirstDateofMonth] = CAST(CAST(YEAR(@CurrentDate) AS VARCHAR(4)) + '-' + CAST(MONTH(@CurrentDate) AS VARCHAR(2)) + '-01' AS DATE),&#xA;      [LastDateofMonth] = EOMONTH(@CurrentDate),&#xA;      [FirstDateofWeek] = DATEADD(dd, - (DATEPART(dw, @CurrentDate) - 1), @CurrentDate),&#xA;      [LastDateofWeek] = DATEADD(dd, 7 - (DATEPART(dw, @CurrentDate)), @CurrentDate)&#xA;&#xA;   SET @CurrentDate = DATEADD(DD, 1, @CurrentDate)&#xA;END&#xA;&#xA;--Update Holiday information&#xA;UPDATE Calendar&#xA;SET [IsHoliday] = 1,&#xA;   [HolidayName] = 'Christmas'&#xA;WHERE [Month] = 12&#xA;   AND [DAY] = 25&#xA;&#xA;UPDATE Calendar&#xA;SET SpecialDays = 'Valentines Day'&#xA;WHERE [Month] = 2&#xA;   AND [DAY] = 14&#xA;&#xA;--Update current date information&#xA;UPDATE Calendar&#xA;SET CurrentYear = DATEDIFF(yy, GETDATE(), DATE),&#xA;   CurrentQuater = DATEDIFF(q, GETDATE(), DATE),&#xA;   CurrentMonth = DATEDIFF(m, GETDATE(), DATE),&#xA;   CurrentWeek = DATEDIFF(ww, GETDATE(), DATE),&#xA;   CurrentDay = DATEDIFF(dd, GETDATE(), DATE)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
@@ -2072,6 +2088,275 @@
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
+      DTS:refId="Package\Load Seasons"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{14DE6215-4120-4337-9B55-91F6412E62E2}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Seasons"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Load Seasons\Excel Source"
+              componentClassID="Microsoft.ExcelSource"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="Excel Source"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">Sheet1$</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Seasons\Excel Source.Connections[OleDbConnection]"
+                  connectionManagerID="{EAE527FC-5164-4596-9727-649856246836}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Excel Connection Manager]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load Seasons\Excel Source.Outputs[Excel Source Output]"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Seasons\Excel Source.Outputs[Excel Source Output].Columns[month]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Seasons\Excel Source.Outputs[Excel Source Output].ExternalColumns[month]"
+                      lineageId="Package\Load Seasons\Excel Source.Outputs[Excel Source Output].Columns[month]"
+                      name="month"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Seasons\Excel Source.Outputs[Excel Source Output].Columns[season]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Seasons\Excel Source.Outputs[Excel Source Output].ExternalColumns[season]"
+                      length="255"
+                      lineageId="Package\Load Seasons\Excel Source.Outputs[Excel Source Output].Columns[season]"
+                      name="season"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Seasons\Excel Source.Outputs[Excel Source Output].ExternalColumns[month]"
+                      dataType="r8"
+                      name="month" />
+                    <externalMetadataColumn
+                      refId="Package\Load Seasons\Excel Source.Outputs[Excel Source Output].ExternalColumns[season]"
+                      dataType="wstr"
+                      length="255"
+                      name="season" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load Seasons\Excel Source.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Seasons\Excel Source.Outputs[Excel Source Error Output].Columns[month]"
+                      dataType="r8"
+                      lineageId="Package\Load Seasons\Excel Source.Outputs[Excel Source Error Output].Columns[month]"
+                      name="month" />
+                    <outputColumn
+                      refId="Package\Load Seasons\Excel Source.Outputs[Excel Source Error Output].Columns[season]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Load Seasons\Excel Source.Outputs[Excel Source Error Output].Columns[season]"
+                      name="season" />
+                    <outputColumn
+                      refId="Package\Load Seasons\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Seasons\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Seasons\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Seasons\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Seasons\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Seasons]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Seasons\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="{117A4767-EB31-464C-9853-B06130B7B130}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Extract Staging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load Seasons\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Seasons\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[month]"
+                      cachedDataType="r8"
+                      cachedName="month"
+                      externalMetadataColumnId="Package\Load Seasons\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MONTH]"
+                      lineageId="Package\Load Seasons\Excel Source.Outputs[Excel Source Output].Columns[month]" />
+                    <inputColumn
+                      refId="Package\Load Seasons\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[season]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="season"
+                      externalMetadataColumnId="Package\Load Seasons\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SEASON]"
+                      lineageId="Package\Load Seasons\Excel Source.Outputs[Excel Source Output].Columns[season]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Seasons\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MONTH]"
+                      dataType="i4"
+                      name="MONTH" />
+                    <externalMetadataColumn
+                      refId="Package\Load Seasons\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SEASON]"
+                      dataType="wstr"
+                      length="255"
+                      name="SEASON" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Seasons\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load Seasons\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Seasons\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Seasons\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Seasons\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Seasons\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load Seasons.Paths[Excel Source Output]"
+              endId="Package\Load Seasons\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Excel Source Output"
+              startId="Package\Load Seasons\Excel Source.Outputs[Excel Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
       DTS:refId="Package\Load Ship"
       DTS:CreationName="Microsoft.Pipeline"
       DTS:Description="Data Flow Task"
@@ -4034,6 +4319,14 @@
       DTS:ObjectName="Constraint 1"
       DTS:To="Package\Load Ship" />
     <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 10]"
+      DTS:CreationName=""
+      DTS:DTSID="{828E46FB-3259-4E08-ABC7-F122D1CE2C6F}"
+      DTS:From="Package\Clear Staging Database"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 10"
+      DTS:To="Package\Load Seasons" />
+    <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 11]"
       DTS:CreationName=""
       DTS:DTSID="{8DDC32C1-6529-432E-A279-1B4D0B58234F}"
@@ -4097,6 +4390,14 @@
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 8"
       DTS:To="Package\Load VoyagePort" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 9]"
+      DTS:CreationName=""
+      DTS:DTSID="{8B5DE513-B3D0-4366-A367-C4066F587097}"
+      DTS:From="Package\Clear Staging Database"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 9"
+      DTS:To="Package\Load Calendar" />
   </DTS:PrecedenceConstraints>
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
 <!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
@@ -4113,73 +4414,73 @@
         <NodeLayout
           Size="189,42"
           Id="Package\Clear Staging Database"
-          TopLeft="313,254" />
+          TopLeft="312,310" />
         <NodeLayout
           Size="157,42"
           Id="Package\Load Consignors"
-          TopLeft="21,162" />
+          TopLeft="21,219" />
         <NodeLayout
           Size="166,42"
           Id="Package\Load ContainerList"
-          TopLeft="10,249" />
+          TopLeft="10,306" />
         <NodeLayout
           Size="161,42"
           Id="Package\Load Country List"
-          TopLeft="654,248" />
+          TopLeft="691,307" />
         <NodeLayout
           Size="127,42"
           Id="Package\Load Item"
-          TopLeft="122,114" />
+          TopLeft="122,171" />
         <NodeLayout
           Size="124,42"
           Id="Package\Load Port"
-          TopLeft="193,67" />
+          TopLeft="193,124" />
         <NodeLayout
           Size="125,42"
           Id="Package\Load Ship"
-          TopLeft="263,18" />
+          TopLeft="263,75" />
         <NodeLayout
           Size="149,42"
           Id="Package\Load Shipment"
-          TopLeft="390,17" />
+          TopLeft="427,76" />
         <NodeLayout
           Size="179,42"
           Id="Package\Load Shipment Detail"
-          TopLeft="471,64" />
+          TopLeft="508,123" />
         <NodeLayout
           Size="140,42"
           Id="Package\Load Voyage"
-          TopLeft="567,112" />
+          TopLeft="604,171" />
         <NodeLayout
           Size="159,42"
           Id="Package\Load VoyagePort"
-          TopLeft="645,161" />
+          TopLeft="682,220" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
-          TopLeft="377.333333333333,254">
+          TopLeft="376.333333333333,310">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-122.333333333333,-145"
+              EndConnector="-121.333333333333,-144"
               Start="0,0"
-              End="-122.333333333333,-137.5">
+              End="-121.333333333333,-136.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,-54.7303252885624" />
+                    End="0,-54.3252885624344" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,-54.7303252885624"
-                    Point2="0,-58.7303252885624"
-                    Point3="-4,-58.7303252885624" />
+                    Point1="0,-54.3252885624344"
+                    Point2="0,-58.3252885624344"
+                    Point3="-4,-58.3252885624344" />
                   <mssgle:LineSegment
-                    End="-118.333333333333,-58.7303252885624" />
+                    End="-117.333333333333,-58.3252885624344" />
                   <mssgle:CubicBezierSegment
-                    Point1="-118.333333333333,-58.7303252885624"
-                    Point2="-122.333333333333,-58.7303252885624"
-                    Point3="-122.333333333333,-62.7303252885624" />
+                    Point1="-117.333333333333,-58.3252885624344"
+                    Point2="-121.333333333333,-58.3252885624344"
+                    Point3="-121.333333333333,-62.3252885624344" />
                   <mssgle:LineSegment
-                    End="-122.333333333333,-137.5" />
+                    End="-121.333333333333,-136.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4190,30 +4491,30 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="397.444444444444,254">
+          TopLeft="396.444444444444,310">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-71.9444444444445,-194"
+              EndConnector="-70.9444444444445,-193"
               Start="0,0"
-              End="-71.9444444444445,-186.5">
+              End="-70.9444444444445,-185.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,-87.5492083203974" />
+                    End="0,-87.0773051847252" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,-87.5492083203974"
-                    Point2="0,-91.5492083203974"
-                    Point3="-4,-91.5492083203974" />
+                    Point1="0,-87.0773051847252"
+                    Point2="0,-91.0773051847252"
+                    Point3="-4,-91.0773051847252" />
                   <mssgle:LineSegment
-                    End="-67.9444444444445,-91.5492083203974" />
+                    End="-66.9444444444445,-91.0773051847252" />
                   <mssgle:CubicBezierSegment
-                    Point1="-67.9444444444445,-91.5492083203974"
-                    Point2="-71.9444444444445,-91.5492083203974"
-                    Point3="-71.9444444444445,-95.5492083203974" />
+                    Point1="-66.9444444444445,-91.0773051847252"
+                    Point2="-70.9444444444445,-91.0773051847252"
+                    Point3="-70.9444444444445,-95.0773051847252" />
                   <mssgle:LineSegment
-                    End="-71.9444444444445,-186.5" />
+                    End="-70.9444444444445,-185.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4224,18 +4525,18 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 11]"
-          TopLeft="502,272">
+          TopLeft="501,329.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="152,0"
+              EndConnector="190,0"
               Start="0,0"
-              End="144.5,0">
+              End="182.5,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="144.5,0" />
+                    End="182.5,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4246,18 +4547,18 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 2]"
-          TopLeft="313,272.5">
+          TopLeft="312,329">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-137,0"
+              EndConnector="-136,0"
               Start="0,0"
-              End="-129.5,0">
+              End="-128.5,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="-129.5,0" />
+                    End="-128.5,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4268,30 +4569,30 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 3]"
-          TopLeft="337.111111111111,254">
+          TopLeft="336.111111111111,310">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-237.611111111111,-50"
+              EndConnector="-236.611111111111,-49"
               Start="0,0"
-              End="-237.611111111111,-42.5">
+              End="-236.611111111111,-41.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,-6.1639344262295" />
+                    End="0,-5.96065573770491" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,-6.1639344262295"
-                    Point2="0,-10.1639344262295"
-                    Point3="-4,-10.1639344262295" />
+                    Point1="0,-5.96065573770491"
+                    Point2="0,-9.96065573770491"
+                    Point3="-4,-9.96065573770491" />
                   <mssgle:LineSegment
-                    End="-233.611111111111,-10.1639344262295" />
+                    End="-232.611111111111,-9.96065573770491" />
                   <mssgle:CubicBezierSegment
-                    Point1="-233.611111111111,-10.1639344262295"
-                    Point2="-237.611111111111,-10.1639344262295"
-                    Point3="-237.611111111111,-14.1639344262295" />
+                    Point1="-232.611111111111,-9.96065573770491"
+                    Point2="-236.611111111111,-9.96065573770491"
+                    Point3="-236.611111111111,-13.9606557377049" />
                   <mssgle:LineSegment
-                    End="-237.611111111111,-42.5" />
+                    End="-236.611111111111,-41.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4302,30 +4603,30 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 4]"
-          TopLeft="357.222222222222,254">
+          TopLeft="356.222222222222,310">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-171.722222222222,-98"
+              EndConnector="-170.722222222222,-97"
               Start="0,0"
-              End="-171.722222222222,-90.5">
+              End="-170.722222222222,-89.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,-27.2406888265919" />
+                    End="0,-26.9219062875451" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,-27.2406888265919"
-                    Point2="0,-31.2406888265919"
-                    Point3="-4,-31.2406888265919" />
+                    Point1="0,-26.9219062875451"
+                    Point2="0,-30.9219062875451"
+                    Point3="-4,-30.9219062875451" />
                   <mssgle:LineSegment
-                    End="-167.722222222222,-31.2406888265919" />
+                    End="-166.722222222222,-30.9219062875451" />
                   <mssgle:CubicBezierSegment
-                    Point1="-167.722222222222,-31.2406888265919"
-                    Point2="-171.722222222222,-31.2406888265919"
-                    Point3="-171.722222222222,-35.2406888265919" />
+                    Point1="-166.722222222222,-30.9219062875451"
+                    Point2="-170.722222222222,-30.9219062875451"
+                    Point3="-170.722222222222,-34.9219062875451" />
                   <mssgle:LineSegment
-                    End="-171.722222222222,-90.5" />
+                    End="-170.722222222222,-89.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4336,30 +4637,30 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 5]"
-          TopLeft="417.555555555556,254">
+          TopLeft="424.6,310">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="46.9444444444445,-195"
+              EndConnector="76.9,-192"
               Start="0,0"
-              End="46.9444444444445,-187.5">
+              End="76.9,-184.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,-88.0211114560695" />
+                    End="0,-81.8326506729081" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,-88.0211114560695"
-                    Point2="0,-92.0211114560695"
-                    Point3="4,-92.0211114560695" />
+                    Point1="0,-81.8326506729081"
+                    Point2="0,-85.8326506729081"
+                    Point3="4,-85.8326506729081" />
                   <mssgle:LineSegment
-                    End="42.9444444444445,-92.0211114560695" />
+                    End="72.9,-85.8326506729081" />
                   <mssgle:CubicBezierSegment
-                    Point1="42.9444444444445,-92.0211114560695"
-                    Point2="46.9444444444445,-92.0211114560695"
-                    Point3="46.9444444444445,-96.0211114560695" />
+                    Point1="72.9,-85.8326506729081"
+                    Point2="76.9,-85.8326506729081"
+                    Point3="76.9,-89.8326506729081" />
                   <mssgle:LineSegment
-                    End="46.9444444444445,-187.5" />
+                    End="76.9,-184.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4370,30 +4671,30 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 6]"
-          TopLeft="437.666666666667,254">
+          TopLeft="442.7,310">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="122.833333333333,-148"
+              EndConnector="154.8,-145"
               Start="0,0"
-              End="122.833333333333,-140.5">
+              End="154.8,-137.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,-55.9454354669465" />
+                    End="0,-51.3239528795812" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,-55.9454354669465"
-                    Point2="0,-59.9454354669465"
-                    Point3="4,-59.9454354669465" />
+                    Point1="0,-51.3239528795812"
+                    Point2="0,-55.3239528795812"
+                    Point3="4,-55.3239528795812" />
                   <mssgle:LineSegment
-                    End="118.833333333333,-59.9454354669465" />
+                    End="150.8,-55.3239528795812" />
                   <mssgle:CubicBezierSegment
-                    Point1="118.833333333333,-59.9454354669465"
-                    Point2="122.833333333333,-59.9454354669465"
-                    Point3="122.833333333333,-63.9454354669465" />
+                    Point1="150.8,-55.3239528795812"
+                    Point2="154.8,-55.3239528795812"
+                    Point3="154.8,-59.3239528795812" />
                   <mssgle:LineSegment
-                    End="122.833333333333,-140.5" />
+                    End="154.8,-137.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4404,30 +4705,30 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 7]"
-          TopLeft="457.777777777778,254">
+          TopLeft="460.8,310">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="179.222222222222,-100"
+              EndConnector="213.2,-97"
               Start="0,0"
-              End="179.222222222222,-92.5">
+              End="213.2,-89.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,-27.8782539046856" />
+                    End="0,-24.9487750556793" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,-27.8782539046856"
-                    Point2="0,-31.8782539046856"
-                    Point3="4,-31.8782539046856" />
+                    Point1="0,-24.9487750556793"
+                    Point2="0,-28.9487750556793"
+                    Point3="4,-28.9487750556793" />
                   <mssgle:LineSegment
-                    End="175.222222222222,-31.8782539046856" />
+                    End="209.2,-28.9487750556793" />
                   <mssgle:CubicBezierSegment
-                    Point1="175.222222222222,-31.8782539046856"
-                    Point2="179.222222222222,-31.8782539046856"
-                    Point3="179.222222222222,-35.8782539046856" />
+                    Point1="209.2,-28.9487750556793"
+                    Point2="213.2,-28.9487750556793"
+                    Point3="213.2,-32.9487750556793" />
                   <mssgle:LineSegment
-                    End="179.222222222222,-92.5" />
+                    End="213.2,-89.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4438,30 +4739,82 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 8]"
-          TopLeft="477.888888888889,254">
+          TopLeft="478.9,310">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="246.611111111111,-51"
+              EndConnector="282.6,-48"
               Start="0,0"
-              End="246.611111111111,-43.5">
+              End="282.6,-40.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,-6.36721311475409" />
+                    End="0,-5.09777015437393" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,-6.36721311475409"
-                    Point2="0,-10.3672131147541"
-                    Point3="4,-10.3672131147541" />
+                    Point1="0,-5.09777015437393"
+                    Point2="0,-9.09777015437393"
+                    Point3="4,-9.09777015437393" />
                   <mssgle:LineSegment
-                    End="242.611111111111,-10.3672131147541" />
+                    End="278.6,-9.09777015437393" />
                   <mssgle:CubicBezierSegment
-                    Point1="242.611111111111,-10.3672131147541"
-                    Point2="246.611111111111,-10.3672131147541"
-                    Point3="246.611111111111,-14.3672131147541" />
+                    Point1="278.6,-9.09777015437393"
+                    Point2="282.6,-9.09777015437393"
+                    Point3="282.6,-13.0977701543739" />
                   <mssgle:LineSegment
-                    End="246.611111111111,-43.5" />
+                    End="282.6,-40.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="146,42"
+          Id="Package\Load Calendar"
+          TopLeft="331,27" />
+        <NodeLayout
+          Size="143,42"
+          Id="Package\Load Seasons"
+          TopLeft="335,402" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 10]"
+          TopLeft="406.5,352">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,50"
+              Start="0,0"
+              End="0,42.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,42.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 9]"
+          TopLeft="405.25,310">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,-241"
+              Start="0,0"
+              End="0,-233.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-233.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -5133,6 +5486,70 @@
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
     design-time-name="Package\Load VoyagePort\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Load Seasons">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="139,42"
+          Id="Package\Load Seasons\Excel Source"
+          TopLeft="593,173" />
+        <NodeLayout
+          Size="171,42"
+          Id="Package\Load Seasons\OLE DB Destination"
+          TopLeft="572,318" />
+        <EdgeLayout
+          Id="Package\Load Seasons.Paths[Excel Source Output]"
+          TopLeft="660,215">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,103"
+              Start="0,0"
+              End="0,95.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,95.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Seasons\Excel Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Seasons\OLE DB Destination">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
