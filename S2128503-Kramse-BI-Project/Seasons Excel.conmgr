@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0"?>
 <DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
-  DTS:ObjectName="Excel Connection Manager"
+  DTS:ObjectName="Seasons Excel"
   DTS:DTSID="{EAE527FC-5164-4596-9727-649856246836}"
   DTS:CreationName="EXCEL">
   <DTS:ObjectData>
     <DTS:ConnectionManager
-      DTS:ConnectionString="Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\Downloads\Seasons.xls;Extended Properties=&quot;Excel 8.0;HDR=YES&quot;;" />
+      DTS:ConnectionString="Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\Downloads\Seasons.xls;Extended Properties=&quot;EXCEL 8.0;HDR=YES&quot;;" />
   </DTS:ObjectData>
 </DTS:ConnectionManager>

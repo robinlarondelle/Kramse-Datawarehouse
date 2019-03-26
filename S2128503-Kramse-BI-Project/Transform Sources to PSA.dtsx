@@ -5,14 +5,14 @@
   DTS:CreationName="Microsoft.Package"
   DTS:CreatorComputerName="DESKTOP-01MBIEU"
   DTS:CreatorName="DESKTOP-01MBIEU\robin"
-  DTS:DTSID="{AEFE776F-59FD-4DB0-BEAC-2CAAEE281B81}"
+  DTS:DTSID="{0C65E112-5460-48BC-BBE0-5B76FD91413E}"
   DTS:ExecutableType="Microsoft.Package"
   DTS:LastModifiedProductVersion="15.0.1100.123"
   DTS:LocaleID="1043"
-  DTS:ObjectName="Transform Sources"
+  DTS:ObjectName="Transform Sources to PSA"
   DTS:PackageType="5"
-  DTS:VersionBuild="72"
-  DTS:VersionGUID="{2B6F3AD6-9218-4D77-A3DA-3FEC7A7C1E21}">
+  DTS:VersionBuild="87"
+  DTS:VersionGUID="{E4A25F8B-56FC-4573-8936-095B317E7C28}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -25,7 +25,7 @@
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Change Consignors Country"
-      DTS:ThreadHint="1">
+      DTS:ThreadHint="0">
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
@@ -41,7 +41,7 @@
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Change Port Country"
-      DTS:ThreadHint="0">
+      DTS:ThreadHint="1">
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
@@ -78,7 +78,7 @@
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{FDF5782B-3B2A-4FDC-A824-455E0D180203}"
-          SQLTask:SqlStatementSource="DELETE FROM VoyagePort&#xA;DELETE FROM Item&#xA;DELETE FROM Shipment&#xA;DELETE FROM Consignor&#xA;DELETE FROM Shipment_Details&#xA;DELETE FROM Voyage&#xA;DELETE FROM Ship&#xA;DELETE FROM Port&#xA;DELETE FROM Containers&#xA;DELETE FROM Countries&#xA;DELETE FROM Calendar&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="DELETE FROM VoyagePort&#xA;DELETE FROM Shipment_Details&#xA;DELETE FROM Shipment&#xA;DELETE FROM Consignor&#xA;DELETE FROM Item&#xA;DELETE FROM Voyage&#xA;DELETE FROM Ship&#xA;DELETE FROM Port&#xA;DELETE FROM Containers&#xA;DELETE FROM Countries&#xA;DELETE FROM Calendar&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
@@ -89,7 +89,7 @@
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Filter NULL Values Consignors"
-      DTS:ThreadHint="1">
+      DTS:ThreadHint="0">
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
@@ -105,12 +105,12 @@
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Reset Row ID"
-      DTS:ThreadHint="1">
+      DTS:ThreadHint="0">
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{FDF5782B-3B2A-4FDC-A824-455E0D180203}"
-          SQLTask:SqlStatementSource="DBCC CHECKIDENT (Consignor, RESEED, 0)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="DBCC CHECKIDENT (Consignor, RESEED, 0)&#xA;DBCC CHECKIDENT (Shipment_Details, RESEED, 0)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
@@ -5287,6 +5287,110 @@ where [refTable].[MONTH] = ?</property>
           version="1">
           <components>
             <component
+              refId="Package\Transfer Shipment_Detail\Data Conversion"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversion"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Transfer Shipment_Detail\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Transfer Shipment_Detail\Data Conversion.Inputs[Data Conversion Input].Columns[CONTAINER_NR_RANGE_BEGIN]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="CONTAINER_NR_RANGE_BEGIN"
+                      lineageId="Package\Transfer Shipment_Detail\Derived Column.Outputs[Derived Column Output].Columns[CONTAINER_NR_RANGE_BEGIN]" />
+                    <inputColumn
+                      refId="Package\Transfer Shipment_Detail\Data Conversion.Inputs[Data Conversion Input].Columns[CONTAINER_NR_RANGE_END]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="CONTAINER_NR_RANGE_END"
+                      lineageId="Package\Transfer Shipment_Detail\Derived Column.Outputs[Derived Column Output].Columns[CONTAINER_NR_RANGE_END]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Transfer Shipment_Detail\Data Conversion.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\Transfer Shipment_Detail\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Transfer Shipment_Detail\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of CONTAINER_NR_RANGE_BEGIN]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Transfer Shipment_Detail\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of CONTAINER_NR_RANGE_BEGIN]"
+                      name="Copy of CONTAINER_NR_RANGE_BEGIN"
+                      precision="18"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Transfer Shipment_Detail\Derived Column.Outputs[Derived Column Output].Columns[CONTAINER_NR_RANGE_BEGIN]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Transfer Shipment_Detail\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of CONTAINER_NR_RANGE_END]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Transfer Shipment_Detail\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of CONTAINER_NR_RANGE_END]"
+                      name="Copy of CONTAINER_NR_RANGE_END"
+                      precision="18"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Transfer Shipment_Detail\Derived Column.Outputs[Derived Column Output].Columns[CONTAINER_NR_RANGE_END]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Transfer Shipment_Detail\Data Conversion.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\Transfer Shipment_Detail\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Transfer Shipment_Detail\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Transfer Shipment_Detail\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Transfer Shipment_Detail\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Transfer Shipment_Detail\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
               refId="Package\Transfer Shipment_Detail\Derived Column"
               componentClassID="Microsoft.DerivedColumn"
               contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
@@ -5298,6 +5402,14 @@ where [refTable].[MONTH] = ?</property>
                   refId="Package\Transfer Shipment_Detail\Derived Column.Inputs[Derived Column Input]"
                   description="Input to the Derived Column Transformation"
                   name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Transfer Shipment_Detail\Derived Column.Inputs[Derived Column Input].Columns[CONTAINER_NR]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="CONTAINER_NR"
+                      lineageId="Package\Transfer Shipment_Detail\OLE DB Source.Outputs[OLE DB Source Output].Columns[CONTAINER_NR]" />
+                  </inputColumns>
                   <externalMetadataColumns />
                 </input>
               </inputs>
@@ -5309,6 +5421,29 @@ where [refTable].[MONTH] = ?</property>
                   name="Derived Column Output"
                   synchronousInputId="Package\Transfer Shipment_Detail\Derived Column.Inputs[Derived Column Input]">
                   <outputColumns>
+                    <outputColumn
+                      refId="Package\Transfer Shipment_Detail\Derived Column.Outputs[Derived Column Output].Columns[CONTAINER_NR_RANGE_BEGIN]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Transfer Shipment_Detail\Derived Column.Outputs[Derived Column Output].Columns[CONTAINER_NR_RANGE_BEGIN]"
+                      name="CONTAINER_NR_RANGE_BEGIN"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[LEFT](#{Package\Transfer Shipment_Detail\OLE DB Source.Outputs[OLE DB Source Output].Columns[CONTAINER_NR]},[FINDSTRING](#{Package\Transfer Shipment_Detail\OLE DB Source.Outputs[OLE DB Source Output].Columns[CONTAINER_NR]},"-",1) - 1)</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">LEFT(CONTAINER_NR,FINDSTRING(CONTAINER_NR,"-",1) - 1)</property>
+                      </properties>
+                    </outputColumn>
                     <outputColumn
                       refId="Package\Transfer Shipment_Detail\Derived Column.Outputs[Derived Column Output].Columns[EXTRACTION_DATE]"
                       dataType="dbTimeStamp"
@@ -5329,6 +5464,29 @@ where [refTable].[MONTH] = ?</property>
                           description="Derived Column Friendly Expression"
                           expressionType="Notify"
                           name="FriendlyExpression">GETDATE()</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Transfer Shipment_Detail\Derived Column.Outputs[Derived Column Output].Columns[CONTAINER_NR_RANGE_END]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Transfer Shipment_Detail\Derived Column.Outputs[Derived Column Output].Columns[CONTAINER_NR_RANGE_END]"
+                      name="CONTAINER_NR_RANGE_END"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RIGHT](#{Package\Transfer Shipment_Detail\OLE DB Source.Outputs[OLE DB Source Output].Columns[CONTAINER_NR]},([FINDSTRING](#{Package\Transfer Shipment_Detail\OLE DB Source.Outputs[OLE DB Source Output].Columns[CONTAINER_NR]},"-",1) - [LEN](#{Package\Transfer Shipment_Detail\OLE DB Source.Outputs[OLE DB Source Output].Columns[CONTAINER_NR]})) * (-1))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RIGHT(CONTAINER_NR,(FINDSTRING(CONTAINER_NR,"-",1) - LEN(CONTAINER_NR)) * (-1))</property>
                       </properties>
                     </outputColumn>
                   </outputColumns>
@@ -5352,6 +5510,94 @@ where [refTable].[MONTH] = ?</property>
                       refId="Package\Transfer Shipment_Detail\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
                       dataType="i4"
                       lineageId="Package\Transfer Shipment_Detail\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Transfer Shipment_Detail\Derived Column 1"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column 1"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Transfer Shipment_Detail\Derived Column 1.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Transfer Shipment_Detail\Derived Column 1.Inputs[Derived Column Input].Columns[Copy of CONTAINER_NR_RANGE_BEGIN]"
+                      cachedDataType="numeric"
+                      cachedName="Copy of CONTAINER_NR_RANGE_BEGIN"
+                      cachedPrecision="18"
+                      lineageId="Package\Transfer Shipment_Detail\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of CONTAINER_NR_RANGE_BEGIN]" />
+                    <inputColumn
+                      refId="Package\Transfer Shipment_Detail\Derived Column 1.Inputs[Derived Column Input].Columns[Copy of CONTAINER_NR_RANGE_END]"
+                      cachedDataType="numeric"
+                      cachedName="Copy of CONTAINER_NR_RANGE_END"
+                      cachedPrecision="18"
+                      lineageId="Package\Transfer Shipment_Detail\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of CONTAINER_NR_RANGE_END]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Transfer Shipment_Detail\Derived Column 1.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Transfer Shipment_Detail\Derived Column 1.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Transfer Shipment_Detail\Derived Column 1.Outputs[Derived Column Output].Columns[CONTAINER_AMOUNT]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Transfer Shipment_Detail\Derived Column 1.Outputs[Derived Column Output].Columns[CONTAINER_AMOUNT]"
+                      name="CONTAINER_AMOUNT"
+                      precision="19"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">#{Package\Transfer Shipment_Detail\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of CONTAINER_NR_RANGE_END]} - #{Package\Transfer Shipment_Detail\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of CONTAINER_NR_RANGE_BEGIN]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">[Copy of CONTAINER_NR_RANGE_END] - [Copy of CONTAINER_NR_RANGE_BEGIN]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Transfer Shipment_Detail\Derived Column 1.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Transfer Shipment_Detail\Derived Column 1.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Transfer Shipment_Detail\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Transfer Shipment_Detail\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Transfer Shipment_Detail\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Transfer Shipment_Detail\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
                       name="ErrorColumn"
                       specialFlags="2" />
                   </outputColumns>
@@ -5438,13 +5684,6 @@ where [refTable].[MONTH] = ?</property>
                       externalMetadataColumnId="Package\Transfer Shipment_Detail\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SHIPMENT_ID]"
                       lineageId="Package\Transfer Shipment_Detail\OLE DB Source.Outputs[OLE DB Source Output].Columns[SHIPMENT_ID]" />
                     <inputColumn
-                      refId="Package\Transfer Shipment_Detail\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CONTAINER_NR]"
-                      cachedDataType="wstr"
-                      cachedLength="50"
-                      cachedName="CONTAINER_NR"
-                      externalMetadataColumnId="Package\Transfer Shipment_Detail\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CONTAINER_NR]"
-                      lineageId="Package\Transfer Shipment_Detail\OLE DB Source.Outputs[OLE DB Source Output].Columns[CONTAINER_NR]" />
-                    <inputColumn
                       refId="Package\Transfer Shipment_Detail\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ITEM_ID]"
                       cachedDataType="i4"
                       cachedName="ITEM_ID"
@@ -5462,6 +5701,27 @@ where [refTable].[MONTH] = ?</property>
                       cachedName="EXTRACTION_DATE"
                       externalMetadataColumnId="Package\Transfer Shipment_Detail\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[EXTRACTION_DATE]"
                       lineageId="Package\Transfer Shipment_Detail\Derived Column.Outputs[Derived Column Output].Columns[EXTRACTION_DATE]" />
+                    <inputColumn
+                      refId="Package\Transfer Shipment_Detail\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CONTAINER_AMOUNT]"
+                      cachedDataType="numeric"
+                      cachedName="CONTAINER_AMOUNT"
+                      cachedPrecision="19"
+                      externalMetadataColumnId="Package\Transfer Shipment_Detail\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CONTAINER_AMOUNT]"
+                      lineageId="Package\Transfer Shipment_Detail\Derived Column 1.Outputs[Derived Column Output].Columns[CONTAINER_AMOUNT]" />
+                    <inputColumn
+                      refId="Package\Transfer Shipment_Detail\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Copy of CONTAINER_NR_RANGE_END]"
+                      cachedDataType="numeric"
+                      cachedName="Copy of CONTAINER_NR_RANGE_END"
+                      cachedPrecision="18"
+                      externalMetadataColumnId="Package\Transfer Shipment_Detail\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CONTAINER_NR_RANGE_END]"
+                      lineageId="Package\Transfer Shipment_Detail\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of CONTAINER_NR_RANGE_END]" />
+                    <inputColumn
+                      refId="Package\Transfer Shipment_Detail\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Copy of CONTAINER_NR_RANGE_BEGIN]"
+                      cachedDataType="numeric"
+                      cachedName="Copy of CONTAINER_NR_RANGE_BEGIN"
+                      cachedPrecision="18"
+                      externalMetadataColumnId="Package\Transfer Shipment_Detail\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CONTAINER_NR_RANGE_BEGIN]"
+                      lineageId="Package\Transfer Shipment_Detail\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of CONTAINER_NR_RANGE_BEGIN]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -5474,11 +5734,6 @@ where [refTable].[MONTH] = ?</property>
                       dataType="i4"
                       name="SHIPMENT_ID" />
                     <externalMetadataColumn
-                      refId="Package\Transfer Shipment_Detail\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CONTAINER_NR]"
-                      dataType="wstr"
-                      length="50"
-                      name="CONTAINER_NR" />
-                    <externalMetadataColumn
                       refId="Package\Transfer Shipment_Detail\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ITEM_ID]"
                       dataType="i4"
                       name="ITEM_ID" />
@@ -5490,6 +5745,18 @@ where [refTable].[MONTH] = ?</property>
                       refId="Package\Transfer Shipment_Detail\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[EXTRACTION_DATE]"
                       dataType="dbTimeStamp"
                       name="EXTRACTION_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Shipment_Detail\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CONTAINER_NR_RANGE_BEGIN]"
+                      dataType="i4"
+                      name="CONTAINER_NR_RANGE_BEGIN" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Shipment_Detail\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CONTAINER_NR_RANGE_END]"
+                      dataType="i4"
+                      name="CONTAINER_NR_RANGE_END" />
+                    <externalMetadataColumn
+                      refId="Package\Transfer Shipment_Detail\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CONTAINER_AMOUNT]"
+                      dataType="i4"
+                      name="CONTAINER_AMOUNT" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -5702,8 +5969,18 @@ where [refTable].[MONTH] = ?</property>
           </components>
           <paths>
             <path
+              refId="Package\Transfer Shipment_Detail.Paths[Data Conversion Output]"
+              endId="Package\Transfer Shipment_Detail\Derived Column 1.Inputs[Derived Column Input]"
+              name="Data Conversion Output"
+              startId="Package\Transfer Shipment_Detail\Data Conversion.Outputs[Data Conversion Output]" />
+            <path
               refId="Package\Transfer Shipment_Detail.Paths[Derived Column Output]"
               endId="Package\Transfer Shipment_Detail\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\Transfer Shipment_Detail\Derived Column 1.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Transfer Shipment_Detail.Paths[Derived Column Output1]"
+              endId="Package\Transfer Shipment_Detail\Data Conversion.Inputs[Data Conversion Input]"
               name="Derived Column Output"
               startId="Package\Transfer Shipment_Detail\Derived Column.Outputs[Derived Column Output]" />
             <path
@@ -6689,35 +6966,35 @@ where [refTable].[MONTH] = ?</property>
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 10]"
       DTS:CreationName=""
-      DTS:DTSID="{B716D3D2-29C3-4BAE-ABAD-069712E84DD5}"
+      DTS:DTSID="{4C8FC879-67FF-4645-875A-F1901FDA44FD}"
       DTS:From="Package\Transfer Port"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 10"
-      DTS:To="Package\Transfer Shipment" />
+      DTS:To="Package\Transfer Calendar" />
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 11]"
       DTS:CreationName=""
-      DTS:DTSID="{B5A7EA08-1629-4420-8902-E37479F059BB}"
+      DTS:DTSID="{8BCE58DB-AF5E-4FF0-A520-EA138E13B4EB}"
       DTS:From="Package\Transfer Containers"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 11"
-      DTS:To="Package\Transfer Shipment_Detail" />
+      DTS:To="Package\Reset Row ID" />
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 12]"
       DTS:CreationName=""
-      DTS:DTSID="{0853E4A5-84F7-4E69-BE67-03F661B14A7D}"
-      DTS:From="Package\Transfer Port"
+      DTS:DTSID="{3A6F8C81-2068-4D38-96BF-BB4B6847DF8B}"
+      DTS:From="Package\Reset Row ID"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 12"
-      DTS:To="Package\Transfer Calendar" />
+      DTS:To="Package\Change Consignors Country" />
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 13]"
       DTS:CreationName=""
-      DTS:DTSID="{0D2A8852-4267-4040-88C8-A80ADEC1F243}"
-      DTS:From="Package\Transfer Port"
+      DTS:DTSID="{EA4E95DB-1A2C-481C-8434-C9A4FE5518C8}"
+      DTS:From="Package\Transfer Shipment"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 13"
-      DTS:To="Package\Transfer VoyagePort" />
+      DTS:To="Package\Transfer Shipment_Detail" />
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 14]"
       DTS:CreationName=""
@@ -6750,14 +7027,6 @@ where [refTable].[MONTH] = ?</property>
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 17"
       DTS:To="Package\Transfer Shipment" />
-    <DTS:PrecedenceConstraint
-      DTS:refId="Package.PrecedenceConstraints[Constraint 18]"
-      DTS:CreationName=""
-      DTS:DTSID="{7C8B772B-E07A-4317-B8C6-4CA0533C8BD9}"
-      DTS:From="Package\Reset Row ID"
-      DTS:LogicalAnd="True"
-      DTS:ObjectName="Constraint 18"
-      DTS:To="Package\Change Consignors Country" />
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
       DTS:CreationName=""
@@ -6817,8 +7086,8 @@ where [refTable].[MONTH] = ?</property>
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 8]"
       DTS:CreationName=""
-      DTS:DTSID="{7B7D1FF3-6DC3-42C4-A435-D3E43910CF75}"
-      DTS:From="Package\Clear Staging Database"
+      DTS:DTSID="{D08A4527-E382-4164-B368-A86202B06748}"
+      DTS:From="Package\Transfer Item"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 8"
       DTS:To="Package\Transfer Containers" />
@@ -6846,66 +7115,74 @@ where [refTable].[MONTH] = ?</property>
         <NodeLayout
           Size="209,42"
           Id="Package\Change Consignors Country"
-          TopLeft="28,170" />
+          TopLeft="27,191" />
         <NodeLayout
           Size="177,42"
           Id="Package\Change Port Country"
-          TopLeft="266.75,241.25" />
+          TopLeft="469.75,190.25" />
         <NodeLayout
           Size="175,42"
           Id="Package\Change ship country"
-          TopLeft="480.25,169.5" />
+          TopLeft="266.25,189.5" />
         <NodeLayout
           Size="189,42"
           Id="Package\Clear Staging Database"
-          TopLeft="269.25,23.75" />
+          TopLeft="446.25,34.75" />
         <NodeLayout
           Size="219,42"
           Id="Package\Filter NULL Values Consignors"
-          TopLeft="23,238" />
+          TopLeft="24,256" />
+        <NodeLayout
+          Size="143,42"
+          Id="Package\Reset Row ID"
+          TopLeft="54.25,109" />
+        <NodeLayout
+          Size="163,42"
+          Id="Package\Transfer Calendar"
+          TopLeft="489,326" />
         <NodeLayout
           Size="173,42"
           Id="Package\Transfer Consignors"
-          TopLeft="45,310.25" />
+          TopLeft="27,324.25" />
         <NodeLayout
           Size="171,42"
           Id="Package\Transfer Containers"
-          TopLeft="482.25,30.5" />
+          TopLeft="36.25,29.5" />
         <NodeLayout
           Size="166,42"
           Id="Package\Transfer Countries"
-          TopLeft="278,101.75" />
+          TopLeft="450,115.75" />
         <NodeLayout
           Size="144,42"
           Id="Package\Transfer Item"
-          TopLeft="42.2500000000001,24.25" />
+          TopLeft="259.25,30.25" />
         <NodeLayout
           Size="141,42"
           Id="Package\Transfer Port"
-          TopLeft="283.25,311.25" />
+          TopLeft="481.25,258.25" />
         <NodeLayout
           Size="142,42"
           Id="Package\Transfer Ship"
-          TopLeft="496.25,235.5" />
+          TopLeft="283.25,255.5" />
         <NodeLayout
           Size="166,42"
           Id="Package\Transfer Shipment"
-          TopLeft="75.2500000000001,437.25" />
+          TopLeft="289.25,330.25" />
         <NodeLayout
           Size="199,42"
           Id="Package\Transfer Shipment_Detail"
-          TopLeft="471,101.5" />
+          TopLeft="35,405.5" />
         <NodeLayout
           Size="156,42"
           Id="Package\Transfer Voyage"
-          TopLeft="485,435.75" />
+          TopLeft="310,410.75" />
         <NodeLayout
           Size="175,42"
           Id="Package\Transfer VoyagePort"
-          TopLeft="263.75,410" />
+          TopLeft="546.75,410" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
-          TopLeft="567.5,211.5">
+          TopLeft="354,231.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -6927,414 +7204,18 @@ where [refTable].[MONTH] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="362.375,65.75">
+          TopLeft="536.875,76.75">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,36"
+              EndConnector="0,39"
               Start="0,0"
-              End="0,28.5">
+              End="0,31.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,28.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 11]"
-          TopLeft="569.125,72.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,29"
-              Start="0,0"
-              End="0,21.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,21.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 2]"
-          TopLeft="387.333333333333,143.75">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="180.416666666667,25.7500000000001"
-              Start="0,0"
-              End="180.416666666667,18.2500000000001">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,6.44749403341294" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,6.44749403341294"
-                    Point2="0,10.4474940334129"
-                    Point3="4,10.4474940334129" />
-                  <mssgle:LineSegment
-                    End="176.416666666667,10.4474940334129" />
-                  <mssgle:CubicBezierSegment
-                    Point1="176.416666666667,10.4474940334129"
-                    Point2="180.416666666667,10.4474940334129"
-                    Point3="180.416666666667,14.4474940334129" />
-                  <mssgle:LineSegment
-                    End="180.416666666667,18.2500000000001" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 6]"
-          TopLeft="353.958333333333,143.75">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,97.5000000000001"
-              Start="0,0"
-              End="0,90.0000000000001">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,90.0000000000001" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 7]"
-          TopLeft="354.5,283.25">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,28"
-              Start="0,0"
-              End="0,20.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,20.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 8]"
-          TopLeft="458.25,48.125">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="24,0"
-              Start="0,0"
-              End="16.5,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="16.5,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 9]"
-          TopLeft="269.25,45">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-82.9999999999999,0"
-              Start="0,0"
-              End="-75.4999999999999,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="-75.4999999999999,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 10]"
-          TopLeft="331.583333333333,353.25">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-147,84"
-              Start="0,0"
-              End="-147,76.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,38.0874271440466" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,38.0874271440466"
-                    Point2="0,42.0874271440466"
-                    Point3="-4,42.0874271440466" />
-                  <mssgle:LineSegment
-                    End="-143,42.0874271440466" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-143,42.0874271440466"
-                    Point2="-147,42.0874271440466"
-                    Point3="-147,46.0874271440466" />
-                  <mssgle:LineSegment
-                    End="-147,76.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 13]"
-          TopLeft="351.583333333333,353.25">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,56.7500000000001"
-              Start="0,0"
-              End="0,49.2500000000001">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,49.2500000000001" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 15]"
-          TopLeft="485,460.333333333333">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-243.75,0"
-              Start="0,0"
-              End="-236.25,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="-236.25,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 16]"
-          TopLeft="485,451.083333333333">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-46.25,-20.0833333333333"
-              Start="0,0"
-              End="-38.75,-20.0833333333333">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="-15.5183486238532,0" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-15.5183486238532,0"
-                    Point2="-19.5183486238532,0"
-                    Point3="-19.5183486238532,-4" />
-                  <mssgle:LineSegment
-                    End="-19.5183486238532,-16.0833333333333" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-19.5183486238532,-16.0833333333333"
-                    Point2="-19.5183486238532,-20.0833333333333"
-                    Point3="-23.5183486238532,-20.0833333333333" />
-                  <mssgle:LineSegment
-                    End="-38.75,-20.0833333333333" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 17]"
-          TopLeft="131.708333333333,352.25">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,85"
-              Start="0,0"
-              End="0,77.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,77.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 4]"
-          TopLeft="132.5,212">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,26.0000000000001"
-              Start="0,0"
-              End="0,18.5000000000001">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,18.5000000000001" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 5]"
-          TopLeft="132,280">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,30.25"
-              Start="0,0"
-              End="0,22.75">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,22.75" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="143,42"
-          Id="Package\Reset Row ID"
-          TopLeft="64.25,104" />
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 3]"
-          TopLeft="278,123.875">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-70.75,0"
-              Start="0,0"
-              End="-63.25,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="-63.25,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 18]"
-          TopLeft="134.125,146">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,24"
-              Start="0,0"
-              End="0,16.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,16.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="163,42"
-          Id="Package\Transfer Calendar"
-          TopLeft="478,314" />
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 20]"
-          TopLeft="561.25,356">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,79.7500000000001"
-              Start="0,0"
-              End="0,72.2500000000001">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,72.2500000000001" />
+                    End="0,31.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -7345,18 +7226,386 @@ where [refTable].[MONTH] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 14]"
-          TopLeft="563.375,277.5">
+          TopLeft="354.25,297.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,36.4999999999999"
+              EndConnector="190.416666666667,28.5"
               Start="0,0"
-              End="0,28.9999999999999">
+              End="190.416666666667,21">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,28.9999999999999" />
+                    End="0,12.9337788578372" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,12.9337788578372"
+                    Point2="0,16.9337788578372"
+                    Point3="4,16.9337788578372" />
+                  <mssgle:LineSegment
+                    End="186.416666666667,16.9337788578372" />
+                  <mssgle:CubicBezierSegment
+                    Point1="186.416666666667,16.9337788578372"
+                    Point2="190.416666666667,16.9337788578372"
+                    Point3="190.416666666667,20.9337788578372" />
+                  <mssgle:LineSegment
+                    End="190.416666666667,21" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 15]"
+          TopLeft="363.333333333333,410.75">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="35.2500000000001,-38.5"
+              Start="0,0"
+              End="35.2500000000001,-31">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-15.2645064054258" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-15.2645064054258"
+                    Point2="0,-19.2645064054258"
+                    Point3="4,-19.2645064054258" />
+                  <mssgle:LineSegment
+                    End="31.2500000000001,-19.2645064054258" />
+                  <mssgle:CubicBezierSegment
+                    Point1="31.2500000000001,-19.2645064054258"
+                    Point2="35.2500000000001,-19.2645064054258"
+                    Point3="35.2500000000001,-23.2645064054258" />
+                  <mssgle:LineSegment
+                    End="35.2500000000001,-31" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 16]"
+          TopLeft="466,431.375">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="80.75,0"
+              Start="0,0"
+              End="73.25,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="73.25,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 17]"
+          TopLeft="200,348.25">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="89.2500000000001,0"
+              Start="0,0"
+              End="81.7500000000001,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="81.7500000000001,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="506.666666666667,157.75">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-152.916666666667,31.75"
+              Start="0,0"
+              End="-152.916666666667,24.25">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,8.881861575179" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,8.881861575179"
+                    Point2="0,12.881861575179"
+                    Point3="-4,12.881861575179" />
+                  <mssgle:LineSegment
+                    End="-148.916666666667,12.881861575179" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-148.916666666667,12.881861575179"
+                    Point2="-152.916666666667,12.881861575179"
+                    Point3="-152.916666666667,16.881861575179" />
+                  <mssgle:LineSegment
+                    End="-152.916666666667,24.25" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 20]"
+          TopLeft="570.5,368">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-157.833333333333,42.75"
+              Start="0,0"
+              End="-157.833333333333,35.25">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,21.3895939086294" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,21.3895939086294"
+                    Point2="0,25.3895939086294"
+                    Point3="-4,25.3895939086294" />
+                  <mssgle:LineSegment
+                    End="-153.833333333333,25.3895939086294" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-153.833333333333,25.3895939086294"
+                    Point2="-157.833333333333,25.3895939086294"
+                    Point3="-157.833333333333,29.3895939086294" />
+                  <mssgle:LineSegment
+                    End="-157.833333333333,35.25" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="450,133.375">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-252.75,0"
+              Start="0,0"
+              End="-245.25,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-245.25,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="132.5,233">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,23"
+              Start="0,0"
+              End="0,15.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,15.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="114,298">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,26.25"
+              Start="0,0"
+              End="0,18.75">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.75" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 6]"
+          TopLeft="558.791666666667,157.75">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,32.5"
+              Start="0,0"
+              End="0,25">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 7]"
+          TopLeft="555,232.25">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,26"
+              Start="0,0"
+              End="0,18.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 9]"
+          TopLeft="446.25,53.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-42.9999999999999,0"
+              Start="0,0"
+              End="-35.4999999999999,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-35.4999999999999,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 10]"
+          TopLeft="551.75,300.25">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="44.5833333333334,25.75"
+              Start="0,0"
+              End="44.5833333333334,18.25">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,11.2998177399757" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,11.2998177399757"
+                    Point2="0,15.2998177399757"
+                    Point3="4,15.2998177399757" />
+                  <mssgle:LineSegment
+                    End="40.5833333333334,15.2998177399757" />
+                  <mssgle:CubicBezierSegment
+                    Point1="40.5833333333334,15.2998177399757"
+                    Point2="44.5833333333334,15.2998177399757"
+                    Point3="44.5833333333334,19.2998177399757" />
+                  <mssgle:LineSegment
+                    End="44.5833333333334,18.25" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 8]"
+          TopLeft="259.25,50.875">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-52.0000000000001,0"
+              Start="0,0"
+              End="-44.5000000000001,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-44.5000000000001,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 11]"
+          TopLeft="123.75,71.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,37.5"
+              Start="0,0"
+              End="0,30">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,30" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -7367,18 +7616,52 @@ where [refTable].[MONTH] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 12]"
-          TopLeft="424.25,333.625">
+          TopLeft="128.625,151">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="53.75,0"
+              EndConnector="0,40"
               Start="0,0"
-              End="46.25,0">
+              End="0,32.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="46.25,0" />
+                    End="0,32.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 13]"
+          TopLeft="345.916666666667,372.25">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-211.416666666667,33.25"
+              Start="0,0"
+              End="-211.416666666667,25.75">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,9.49045346062053" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,9.49045346062053"
+                    Point2="0,13.4904534606205"
+                    Point3="-4,13.4904534606205" />
+                  <mssgle:LineSegment
+                    End="-207.416666666667,13.4904534606205" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-207.416666666667,13.4904534606205"
+                    Point2="-211.416666666667,13.4904534606205"
+                    Point3="-211.416666666667,17.4904534606205" />
+                  <mssgle:LineSegment
+                    End="-211.416666666667,25.75" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -7391,14 +7674,127 @@ where [refTable].[MONTH] = ?</property>
     </LayoutInfo>
   </Package>
   <TaskHost
+    design-time-name="Package\Transfer Calendar">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="171,42"
+          Id="Package\Transfer Calendar\OLE DB Destination"
+          TopLeft="628,410" />
+        <NodeLayout
+          Size="113,42"
+          Id="Package\Transfer Calendar\Lookup"
+          TopLeft="658,311" />
+        <NodeLayout
+          Size="150,42"
+          Id="Package\Transfer Calendar\OLE DB Source"
+          TopLeft="643,181" />
+        <EdgeLayout
+          Id="Package\Transfer Calendar.Paths[OLE DB Source Output]"
+          TopLeft="716.25,223">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,88"
+              Start="0,0"
+              End="0,80.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,80.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Transfer Calendar.Paths[Lookup Match Output]"
+          TopLeft="714,353">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,57"
+              Start="0,0"
+              End="0,49.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,49.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,18.9453125,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Transfer Calendar\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Transfer Calendar\Lookup">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[Seasons]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Transfer Calendar\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
     design-time-name="Package\Transfer Consignors">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="170,42"
-          Id="Package\Transfer Consignors\Set Extraction Date"
-          TopLeft="487,267" />
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="150,42"
           Id="Package\Transfer Consignors\OLE DB Source"
@@ -7407,6 +7803,10 @@ where [refTable].[MONTH] = ?</property>
           Size="171,42"
           Id="Package\Transfer Consignors\OLE DB Destination"
           TopLeft="494,394" />
+        <NodeLayout
+          Size="170,42"
+          Id="Package\Transfer Consignors\Set Extraction Date"
+          TopLeft="487,267" />
         <EdgeLayout
           Id="Package\Transfer Consignors.Paths[OLE DB Source Output]"
           TopLeft="560,163">
@@ -7438,7 +7838,9 @@ where [refTable].[MONTH] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -7460,12 +7862,40 @@ where [refTable].[MONTH] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Transfer Consignors\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Transfer Consignors\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
   <TaskHost
     design-time-name="Package\Transfer Containers">
     <LayoutInfo>
@@ -8030,65 +8460,137 @@ where [refTable].[MONTH] = ?</property>
     design-time-name="Package\Transfer Shipment_Detail">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="171,42"
           Id="Package\Transfer Shipment_Detail\OLE DB Destination"
           TopLeft="423,430" />
         <NodeLayout
-          Size="154,42"
-          Id="Package\Transfer Shipment_Detail\Derived Column"
-          TopLeft="426,304" />
-        <NodeLayout
           Size="150,42"
           Id="Package\Transfer Shipment_Detail\OLE DB Source"
           TopLeft="432,145" />
+        <NodeLayout
+          Size="154,42"
+          Id="Package\Transfer Shipment_Detail\Derived Column"
+          TopLeft="425,226" />
         <EdgeLayout
-          Id="Package\Transfer Shipment_Detail.Paths[Derived Column Output]"
-          TopLeft="505.75,346">
+          Id="Package\Transfer Shipment_Detail.Paths[OLE DB Source Output]"
+          TopLeft="504.5,187">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,84"
+              EndConnector="0,39"
               Start="0,0"
-              End="0,76.5">
+              End="0,31.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,76.5" />
+                    End="0,31.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="163,42"
+          Id="Package\Transfer Shipment_Detail\Derived Column 1"
+          TopLeft="422,351" />
+        <EdgeLayout
+          Id="Package\Transfer Shipment_Detail.Paths[Derived Column Output]"
+          TopLeft="506,393">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,37"
+              Start="0,0"
+              End="0,29.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="156,42"
+          Id="Package\Transfer Shipment_Detail\Data Conversion"
+          TopLeft="428,287" />
+        <EdgeLayout
+          Id="Package\Transfer Shipment_Detail.Paths[Derived Column Output1]"
+          TopLeft="425,247">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="3,61"
+              Start="0,0"
+              End="-4.5,61">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-18.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-18.5,0"
+                    Point2="-22.5,0"
+                    Point3="-22.5,4" />
+                  <mssgle:LineSegment
+                    End="-22.5,57" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-22.5,57"
+                    Point2="-22.5,61"
+                    Point3="-18.5,61" />
+                  <mssgle:LineSegment
+                    End="-4.5,61" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Transfer Shipment_Detail.Paths[OLE DB Source Output]"
-          TopLeft="505,187">
+          Id="Package\Transfer Shipment_Detail.Paths[Data Conversion Output]"
+          TopLeft="584,308">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,117"
+              EndConnector="1,64"
               Start="0,0"
-              End="0,109.5">
+              End="8.5,64">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,109.5" />
+                    End="19.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="19.5,0"
+                    Point2="23.5,0"
+                    Point3="23.5,4" />
+                  <mssgle:LineSegment
+                    End="23.5,60" />
+                  <mssgle:CubicBezierSegment
+                    Point1="23.5,60"
+                    Point2="23.5,64"
+                    Point3="19.5,64" />
+                  <mssgle:LineSegment
+                    End="8.5,64" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -8218,7 +8720,7 @@ where [refTable].[MONTH] = ?</property>
     design-time-name="Package\Transfer VoyagePort">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="171,42"
           Id="Package\Transfer VoyagePort\OLE DB Destination"
@@ -8250,7 +8752,9 @@ where [refTable].[MONTH] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -8272,7 +8776,9 @@ where [refTable].[MONTH] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -8293,147 +8799,6 @@ where [refTable].[MONTH] = ?</property>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
     design-time-name="Package\Transfer VoyagePort\OLE DB Source">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Transfer Consignors\OLE DB Source">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Transfer Consignors\OLE DB Destination">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <TaskHost
-    design-time-name="Package\Transfer Calendar">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
-        <NodeLayout
-          Size="150,42"
-          Id="Package\Transfer Calendar\OLE DB Source"
-          TopLeft="643,181" />
-        <NodeLayout
-          Size="113,42"
-          Id="Package\Transfer Calendar\Lookup"
-          TopLeft="658,311" />
-        <EdgeLayout
-          Id="Package\Transfer Calendar.Paths[OLE DB Source Output]"
-          TopLeft="716.25,223">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,88"
-              Start="0,0"
-              End="0,80.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,80.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="171,42"
-          Id="Package\Transfer Calendar\OLE DB Destination"
-          TopLeft="628,410" />
-        <EdgeLayout
-          Id="Package\Transfer Calendar.Paths[Lookup Match Output]"
-          TopLeft="714,353">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,57"
-              Start="0,0"
-              End="0,49.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,49.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-48.19138671875,18.9453125,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-      </GraphLayout>
-    </LayoutInfo>
-  </TaskHost>
-  <PipelineComponentMetadata
-    design-time-name="Package\Transfer Calendar\OLE DB Source">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Transfer Calendar\Lookup">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:boolean">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string">[dbo].[Seasons]</Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:int">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Transfer Calendar\OLE DB Destination">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>

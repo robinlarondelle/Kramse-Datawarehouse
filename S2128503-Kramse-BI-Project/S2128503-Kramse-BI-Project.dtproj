@@ -26,13 +26,14 @@
           <SSIS:Property SSIS:Name="CreatorComputerName">DESKTOP-01MBIEU</SSIS:Property>
           <SSIS:Property SSIS:Name="Description">
           </SSIS:Property>
-          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAMvI2fCBRPUeYQgdKMpTl6QAAAAACAAAAAAAQZgAAAAEAACAAAABVLU009PJu9Fzu6YwiFdLxNgG7SXeeJoiGbSs8kD1LeQAAAAAOgAAAAAIAACAAAABd1EyhpkeJrBWMq/85JPex371RBcZltNrmAG/VGhbUoJAAAADqaNwTyos3BxGom3B2Pa6qlnMogaD1xAAuz1F+/qGWxhD5I7X8ugRoHEy4I4hv4hxNOnAU7tQXI81FoP5Gap2ROJbo5mCxfC3NXdxM74A5upF4Szo2iqq1laN/bO2c4WxKBEXFYSsqhleYNReCKaRNVMc+POfq1kwcvgybx0mZjJXkX9G7CkBZ45W1NI/KZblAAAAAWuGH8q/s1PHbIV5zdG9Yu8NN/FmrIYG2Ak409vrehw/JgTvIGZdw3D7Xc+j5rIFbZZu8BwTMEoFfKlYRvuwIyQ==</SSIS:Property>
+          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAMvI2fCBRPUeYQgdKMpTl6QAAAAACAAAAAAAQZgAAAAEAACAAAAAJAmM/qjNIXFJlw44EwB3ASDgd417XDruVVvA8///stAAAAAAOgAAAAAIAACAAAAAA+i4Vl5/Ar7B6YvoWHepDBDntzfkpoMKymyJI4KbW8JAAAACbZgD5GNB07ApTpQrAh6mgvcBa4NjkPI/mUyjQhxRW2TsNINHchM3OKJYeKbnmW6QbviiNzx5A8a8+nCaQbkjHgVw/kpf0Ott/kagLx92gFSMZ1UaCtrmRvxhdt+3a/0amRjP02BbHm+Dfu5di5/A0AvOrB7kYUJ5foecblWrcQu6Ccpcm+5TDUfWdwn8B0mtAAAAAowIgf1A0lmLyC16NDjZf5qU2MneVHij+mqWlKCqSDc5I8ekyDjCzDGkBbaU5ifrv8fDmaFveY73nRQPy0MhHQA==</SSIS:Property>
           <SSIS:Property SSIS:Name="FormatVersion">1</SSIS:Property>
         </SSIS:Properties>
         <SSIS:Packages>
           <SSIS:Package SSIS:Name="Extract Sources.dtsx" SSIS:EntryPoint="1" />
-          <SSIS:Package SSIS:Name="Transform Sources.dtsx" SSIS:EntryPoint="1" />
           <SSIS:Package SSIS:Name="Execute ETL.dtsx" SSIS:EntryPoint="1" />
+          <SSIS:Package SSIS:Name="Load Sources to ODS.dtsx" SSIS:EntryPoint="1" />
+          <SSIS:Package SSIS:Name="Transform Sources to PSA.dtsx" SSIS:EntryPoint="1" />
         </SSIS:Packages>
         <SSIS:ConnectionManagers>
           <SSIS:ConnectionManager SSIS:Name="Container File Manager.conmgr" />
@@ -42,7 +43,7 @@
           <SSIS:ConnectionManager SSIS:Name="Country List.conmgr" />
           <SSIS:ConnectionManager SSIS:Name="Transform Staging.conmgr" />
           <SSIS:ConnectionManager SSIS:Name="PSA-Database.conmgr" />
-          <SSIS:ConnectionManager SSIS:Name="Excel Connection Manager.conmgr" />
+          <SSIS:ConnectionManager SSIS:Name="Seasons Excel.conmgr" />
         </SSIS:ConnectionManagers>
         <SSIS:DeploymentInfo>
           <SSIS:ProjectConnectionParameters>
@@ -816,7 +817,7 @@
                 <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
               </SSIS:Properties>
             </SSIS:Parameter>
-            <SSIS:Parameter SSIS:Name="CM.Excel Connection Manager.ConnectionString">
+            <SSIS:Parameter SSIS:Name="CM.Seasons Excel.ConnectionString">
               <SSIS:Properties>
                 <SSIS:Property SSIS:Name="ID">
                 </SSIS:Property>
@@ -827,11 +828,11 @@
                 <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
                 <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
                 <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="Value">Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\Downloads\Seasons.xls;Extended Properties="Excel 8.0;HDR=YES";</SSIS:Property>
+                <SSIS:Property SSIS:Name="Value">Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\Downloads\Seasons.xls;Extended Properties="EXCEL 8.0;HDR=YES";</SSIS:Property>
                 <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
               </SSIS:Properties>
             </SSIS:Parameter>
-            <SSIS:Parameter SSIS:Name="CM.Excel Connection Manager.ExcelFilePath">
+            <SSIS:Parameter SSIS:Name="CM.Seasons Excel.ExcelFilePath">
               <SSIS:Properties>
                 <SSIS:Property SSIS:Name="ID">
                 </SSIS:Property>
@@ -846,7 +847,7 @@
                 <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
               </SSIS:Properties>
             </SSIS:Parameter>
-            <SSIS:Parameter SSIS:Name="CM.Excel Connection Manager.FirstRowHasColumnName">
+            <SSIS:Parameter SSIS:Name="CM.Seasons Excel.FirstRowHasColumnName">
               <SSIS:Properties>
                 <SSIS:Property SSIS:Name="ID">
                 </SSIS:Property>
@@ -861,7 +862,7 @@
                 <SSIS:Property SSIS:Name="DataType">3</SSIS:Property>
               </SSIS:Properties>
             </SSIS:Parameter>
-            <SSIS:Parameter SSIS:Name="CM.Excel Connection Manager.InitialCatalog">
+            <SSIS:Parameter SSIS:Name="CM.Seasons Excel.InitialCatalog">
               <SSIS:Properties>
                 <SSIS:Property SSIS:Name="ID">
                 </SSIS:Property>
@@ -875,7 +876,7 @@
                 <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
               </SSIS:Properties>
             </SSIS:Parameter>
-            <SSIS:Parameter SSIS:Name="CM.Excel Connection Manager.Password">
+            <SSIS:Parameter SSIS:Name="CM.Seasons Excel.Password">
               <SSIS:Properties>
                 <SSIS:Property SSIS:Name="ID">
                 </SSIS:Property>
@@ -889,7 +890,7 @@
                 <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
               </SSIS:Properties>
             </SSIS:Parameter>
-            <SSIS:Parameter SSIS:Name="CM.Excel Connection Manager.RetainSameConnection">
+            <SSIS:Parameter SSIS:Name="CM.Seasons Excel.RetainSameConnection">
               <SSIS:Properties>
                 <SSIS:Property SSIS:Name="ID">
                 </SSIS:Property>
@@ -904,7 +905,7 @@
                 <SSIS:Property SSIS:Name="DataType">3</SSIS:Property>
               </SSIS:Properties>
             </SSIS:Parameter>
-            <SSIS:Parameter SSIS:Name="CM.Excel Connection Manager.ServerName">
+            <SSIS:Parameter SSIS:Name="CM.Seasons Excel.ServerName">
               <SSIS:Properties>
                 <SSIS:Property SSIS:Name="ID">
                 </SSIS:Property>
@@ -919,7 +920,7 @@
                 <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
               </SSIS:Properties>
             </SSIS:Parameter>
-            <SSIS:Parameter SSIS:Name="CM.Excel Connection Manager.UserName">
+            <SSIS:Parameter SSIS:Name="CM.Seasons Excel.UserName">
               <SSIS:Properties>
                 <SSIS:Property SSIS:Name="ID">
                 </SSIS:Property>
@@ -941,27 +942,10 @@
                 <SSIS:Property SSIS:Name="Name">Extract Sources</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionBuild">102</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">108</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{6437CD68-77DD-4E28-AEA3-9CF83A54C764}</SSIS:Property>
-                <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
-                <SSIS:Property SSIS:Name="Description">
-                </SSIS:Property>
-                <SSIS:Property SSIS:Name="ProtectionLevel">1</SSIS:Property>
-              </SSIS:Properties>
-              <SSIS:Parameters />
-            </SSIS:PackageMetaData>
-            <SSIS:PackageMetaData SSIS:Name="Transform Sources.dtsx">
-              <SSIS:Properties>
-                <SSIS:Property SSIS:Name="ID">{AEFE776F-59FD-4DB0-BEAC-2CAAEE281B81}</SSIS:Property>
-                <SSIS:Property SSIS:Name="Name">Transform Sources</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionBuild">69</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionComments">
-                </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{25E19B59-196E-430C-9E06-15A7DACA01D5}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{B2D328E7-85D6-4B42-A262-9301C54D86F5}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>
@@ -979,6 +963,40 @@
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionGUID">{54A6E5A1-7CDD-4BA4-98B7-1D233D4FAE4F}</SSIS:Property>
+                <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
+                <SSIS:Property SSIS:Name="Description">
+                </SSIS:Property>
+                <SSIS:Property SSIS:Name="ProtectionLevel">1</SSIS:Property>
+              </SSIS:Properties>
+              <SSIS:Parameters />
+            </SSIS:PackageMetaData>
+            <SSIS:PackageMetaData SSIS:Name="Load Sources to ODS.dtsx">
+              <SSIS:Properties>
+                <SSIS:Property SSIS:Name="ID">{A3EE3FA1-A1B1-42EA-8CA4-23808F06C0B6}</SSIS:Property>
+                <SSIS:Property SSIS:Name="Name">Load Sources to ODS</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionComments">
+                </SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{3A5A57C3-55EA-4C0F-9C01-76829C71316F}</SSIS:Property>
+                <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
+                <SSIS:Property SSIS:Name="Description">
+                </SSIS:Property>
+                <SSIS:Property SSIS:Name="ProtectionLevel">1</SSIS:Property>
+              </SSIS:Properties>
+              <SSIS:Parameters />
+            </SSIS:PackageMetaData>
+            <SSIS:PackageMetaData SSIS:Name="Transform Sources to PSA.dtsx">
+              <SSIS:Properties>
+                <SSIS:Property SSIS:Name="ID">{0C65E112-5460-48BC-BBE0-5B76FD91413E}</SSIS:Property>
+                <SSIS:Property SSIS:Name="Name">Transform Sources to PSA</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">77</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionComments">
+                </SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{1B20D28A-3C53-448C-932C-40572A1C4EB6}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>
