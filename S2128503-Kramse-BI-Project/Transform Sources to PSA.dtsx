@@ -11,11 +11,21 @@
   DTS:LocaleID="1043"
   DTS:ObjectName="Transform Sources to PSA"
   DTS:PackageType="5"
-  DTS:VersionBuild="88"
-  DTS:VersionGUID="{7F82B824-9241-4D85-8AFD-2264A4CCBF89}">
+  DTS:VersionBuild="89"
+  DTS:VersionGUID="{DBE8C22B-F3B9-483F-B145-9DEEF7FE4E3E}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
-  <DTS:Variables />
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{41809FAA-EA47-4993-A89B-33D8A3E31595}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="LastETLDate">
+      <DTS:VariableValue
+        DTS:DataType="7">3/27/2019 1:07:58 PM</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
   <DTS:Executables>
     <DTS:Executable
       DTS:refId="Package\Change Consignors Country"
@@ -95,6 +105,27 @@
         <SQLTask:SqlTaskData
           SQLTask:Connection="{117A4767-EB31-464C-9853-B06130B7B130}"
           SQLTask:SqlStatementSource="  UPDATE Consignor&#xA;  SET DISCOUNT = 0&#xA;  FROM Consignor&#xA;  WHERE DISCOUNT IS NULL" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\GetLastETLDate"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{A5DA3430-42F5-48FA-A068-613311B0E0E6}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="GetLastETLDate"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{FDF5782B-3B2A-4FDC-A824-455E0D180203}"
+          SQLTask:SqlStatementSource="SELECT&#x9;MAX (Last_ETL_Date) as LastETLDate&#xA;FROM&#x9;ETL_PACKAGE&#xA;WHERE&#x9;ETL_OBJECT = 'ETL_Voyage_Shipment&#xA;';&#xA;"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="LastETLDate"
+            SQLTask:DtsVariableName="User::LastETLDate" />
+        </SQLTask:SqlTaskData>
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
@@ -198,7 +229,7 @@ where [refTable].[MONTH] = ?</property>
                 <connection
                   refId="Package\Transfer Calendar\Lookup.Connections[OleDbConnection]"
                   connectionManagerID="{117A4767-EB31-464C-9853-B06130B7B130}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Extract Staging]"
+                  connectionManagerRefId="Project.ConnectionManagers[Sources Database]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -346,7 +377,7 @@ where [refTable].[MONTH] = ?</property>
                 <connection
                   refId="Package\Transfer Calendar\OLE DB Destination.Connections[OleDbConnection]"
                   connectionManagerID="{FDF5782B-3B2A-4FDC-A824-455E0D180203}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Transform Staging]"
+                  connectionManagerRefId="Project.ConnectionManagers[Staging Database]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -911,7 +942,7 @@ where [refTable].[MONTH] = ?</property>
                 <connection
                   refId="Package\Transfer Calendar\OLE DB Source.Connections[OleDbConnection]"
                   connectionManagerID="{117A4767-EB31-464C-9853-B06130B7B130}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Extract Staging]"
+                  connectionManagerRefId="Project.ConnectionManagers[Sources Database]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -1847,7 +1878,7 @@ where [refTable].[MONTH] = ?</property>
                 <connection
                   refId="Package\Transfer Consignors\OLE DB Destination.Connections[OleDbConnection]"
                   connectionManagerID="{FDF5782B-3B2A-4FDC-A824-455E0D180203}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Transform Staging]"
+                  connectionManagerRefId="Project.ConnectionManagers[Staging Database]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -2020,7 +2051,7 @@ where [refTable].[MONTH] = ?</property>
                 <connection
                   refId="Package\Transfer Consignors\OLE DB Source.Connections[OleDbConnection]"
                   connectionManagerID="{117A4767-EB31-464C-9853-B06130B7B130}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Extract Staging]"
+                  connectionManagerRefId="Project.ConnectionManagers[Sources Database]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -2318,7 +2349,7 @@ where [refTable].[MONTH] = ?</property>
                 <connection
                   refId="Package\Transfer Containers\OLE DB Destination.Connections[OleDbConnection]"
                   connectionManagerID="{FDF5782B-3B2A-4FDC-A824-455E0D180203}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Transform Staging]"
+                  connectionManagerRefId="Project.ConnectionManagers[Staging Database]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -2499,7 +2530,7 @@ where [refTable].[MONTH] = ?</property>
                 <connection
                   refId="Package\Transfer Containers\OLE DB Source.Connections[OleDbConnection]"
                   connectionManagerID="{117A4767-EB31-464C-9853-B06130B7B130}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Extract Staging]"
+                  connectionManagerRefId="Project.ConnectionManagers[Sources Database]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -2906,7 +2937,7 @@ where [refTable].[MONTH] = ?</property>
                 <connection
                   refId="Package\Transfer Countries\OLE DB Destination.Connections[OleDbConnection]"
                   connectionManagerID="{FDF5782B-3B2A-4FDC-A824-455E0D180203}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Transform Staging]"
+                  connectionManagerRefId="Project.ConnectionManagers[Staging Database]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -3083,7 +3114,7 @@ where [refTable].[MONTH] = ?</property>
                 <connection
                   refId="Package\Transfer Countries\OLE DB Source.Connections[OleDbConnection]"
                   connectionManagerID="{117A4767-EB31-464C-9853-B06130B7B130}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Extract Staging]"
+                  connectionManagerRefId="Project.ConnectionManagers[Sources Database]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -3408,7 +3439,7 @@ where [refTable].[MONTH] = ?</property>
                 <connection
                   refId="Package\Transfer Item\OLE DB Destination.Connections[OleDbConnection]"
                   connectionManagerID="{FDF5782B-3B2A-4FDC-A824-455E0D180203}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Transform Staging]"
+                  connectionManagerRefId="Project.ConnectionManagers[Staging Database]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -3583,7 +3614,7 @@ where [refTable].[MONTH] = ?</property>
                 <connection
                   refId="Package\Transfer Item\OLE DB Source.Connections[OleDbConnection]"
                   connectionManagerID="{117A4767-EB31-464C-9853-B06130B7B130}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Extract Staging]"
+                  connectionManagerRefId="Project.ConnectionManagers[Sources Database]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -3905,7 +3936,7 @@ where [refTable].[MONTH] = ?</property>
                 <connection
                   refId="Package\Transfer Port\Port Destination.Connections[OleDbConnection]"
                   connectionManagerID="{FDF5782B-3B2A-4FDC-A824-455E0D180203}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Transform Staging]"
+                  connectionManagerRefId="Project.ConnectionManagers[Staging Database]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -4078,7 +4109,7 @@ where [refTable].[MONTH] = ?</property>
                 <connection
                   refId="Package\Transfer Port\Port Source.Connections[OleDbConnection]"
                   connectionManagerID="{117A4767-EB31-464C-9853-B06130B7B130}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Extract Staging]"
+                  connectionManagerRefId="Project.ConnectionManagers[Sources Database]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -4397,7 +4428,7 @@ where [refTable].[MONTH] = ?</property>
                 <connection
                   refId="Package\Transfer Ship\OLE DB Destination.Connections[OleDbConnection]"
                   connectionManagerID="{FDF5782B-3B2A-4FDC-A824-455E0D180203}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Transform Staging]"
+                  connectionManagerRefId="Project.ConnectionManagers[Staging Database]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -4576,7 +4607,7 @@ where [refTable].[MONTH] = ?</property>
                 <connection
                   refId="Package\Transfer Ship\Ship Source.Connections[OleDbConnection]"
                   connectionManagerID="{117A4767-EB31-464C-9853-B06130B7B130}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Extract Staging]"
+                  connectionManagerRefId="Project.ConnectionManagers[Sources Database]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -4907,7 +4938,7 @@ where [refTable].[MONTH] = ?</property>
                 <connection
                   refId="Package\Transfer Shipment\OLE DB Destination.Connections[OleDbConnection]"
                   connectionManagerID="{FDF5782B-3B2A-4FDC-A824-455E0D180203}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Transform Staging]"
+                  connectionManagerRefId="Project.ConnectionManagers[Staging Database]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -5094,7 +5125,7 @@ where [refTable].[MONTH] = ?</property>
                 <connection
                   refId="Package\Transfer Shipment\OLE DB Source.Connections[OleDbConnection]"
                   connectionManagerID="{117A4767-EB31-464C-9853-B06130B7B130}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Extract Staging]"
+                  connectionManagerRefId="Project.ConnectionManagers[Sources Database]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -5665,7 +5696,7 @@ where [refTable].[MONTH] = ?</property>
                 <connection
                   refId="Package\Transfer Shipment_Detail\OLE DB Destination.Connections[OleDbConnection]"
                   connectionManagerID="{FDF5782B-3B2A-4FDC-A824-455E0D180203}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Transform Staging]"
+                  connectionManagerRefId="Project.ConnectionManagers[Staging Database]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -5837,7 +5868,7 @@ where [refTable].[MONTH] = ?</property>
                 <connection
                   refId="Package\Transfer Shipment_Detail\OLE DB Source.Connections[OleDbConnection]"
                   connectionManagerID="{117A4767-EB31-464C-9853-B06130B7B130}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Extract Staging]"
+                  connectionManagerRefId="Project.ConnectionManagers[Sources Database]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -6139,7 +6170,7 @@ where [refTable].[MONTH] = ?</property>
                 <connection
                   refId="Package\Transfer Voyage\OLE DB Destination.Connections[OleDbConnection]"
                   connectionManagerID="{FDF5782B-3B2A-4FDC-A824-455E0D180203}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Transform Staging]"
+                  connectionManagerRefId="Project.ConnectionManagers[Staging Database]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -6294,7 +6325,7 @@ where [refTable].[MONTH] = ?</property>
                 <connection
                   refId="Package\Transfer Voyage\OLE DB Source.Connections[OleDbConnection]"
                   connectionManagerID="{117A4767-EB31-464C-9853-B06130B7B130}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Extract Staging]"
+                  connectionManagerRefId="Project.ConnectionManagers[Sources Database]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -6583,7 +6614,7 @@ where [refTable].[MONTH] = ?</property>
                 <connection
                   refId="Package\Transfer VoyagePort\OLE DB Destination.Connections[OleDbConnection]"
                   connectionManagerID="{FDF5782B-3B2A-4FDC-A824-455E0D180203}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Transform Staging]"
+                  connectionManagerRefId="Project.ConnectionManagers[Staging Database]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -6764,7 +6795,7 @@ where [refTable].[MONTH] = ?</property>
                 <connection
                   refId="Package\Transfer VoyagePort\OLE DB Source.Connections[OleDbConnection]"
                   connectionManagerID="{117A4767-EB31-464C-9853-B06130B7B130}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Extract Staging]"
+                  connectionManagerRefId="Project.ConnectionManagers[Sources Database]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -7028,6 +7059,22 @@ where [refTable].[MONTH] = ?</property>
       DTS:ObjectName="Constraint 17"
       DTS:To="Package\Transfer Shipment" />
     <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 18]"
+      DTS:CreationName=""
+      DTS:DTSID="{D7E52C08-9DAA-4EBA-A1D2-303D8519BD3B}"
+      DTS:From="Package\GetLastETLDate"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 18"
+      DTS:To="Package\Transfer Item" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 19]"
+      DTS:CreationName=""
+      DTS:DTSID="{64D04CAB-0C23-4DBF-A938-5C0D0B3FFA79}"
+      DTS:From="Package\GetLastETLDate"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 19"
+      DTS:To="Package\Transfer Countries" />
+    <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
       DTS:CreationName=""
       DTS:DTSID="{78F50AB5-3D14-42A9-BD45-0FE3C24A098A}"
@@ -7115,74 +7162,74 @@ where [refTable].[MONTH] = ?</property>
         <NodeLayout
           Size="209,42"
           Id="Package\Change Consignors Country"
-          TopLeft="27,191" />
+          TopLeft="26,247" />
         <NodeLayout
           Size="177,42"
           Id="Package\Change Port Country"
-          TopLeft="469.75,190.25" />
+          TopLeft="468.75,246.25" />
         <NodeLayout
           Size="175,42"
           Id="Package\Change ship country"
-          TopLeft="266.25,189.5" />
+          TopLeft="265.25,245.5" />
         <NodeLayout
           Size="189,42"
           Id="Package\Clear Staging Database"
-          TopLeft="446.25,34.75" />
+          TopLeft="445.25,90.75" />
         <NodeLayout
           Size="219,42"
           Id="Package\Filter NULL Values Consignors"
-          TopLeft="24,256" />
+          TopLeft="23,312" />
         <NodeLayout
           Size="143,42"
           Id="Package\Reset Row ID"
-          TopLeft="54.25,109" />
+          TopLeft="53.25,165" />
         <NodeLayout
           Size="163,42"
           Id="Package\Transfer Calendar"
-          TopLeft="261,332" />
+          TopLeft="260,388" />
         <NodeLayout
           Size="173,42"
           Id="Package\Transfer Consignors"
-          TopLeft="27,324.25" />
+          TopLeft="26,380.25" />
         <NodeLayout
           Size="171,42"
           Id="Package\Transfer Containers"
-          TopLeft="36.25,29.5" />
+          TopLeft="35.25,85.5" />
         <NodeLayout
           Size="166,42"
           Id="Package\Transfer Countries"
-          TopLeft="450,115.75" />
+          TopLeft="449,171.75" />
         <NodeLayout
           Size="144,42"
           Id="Package\Transfer Item"
-          TopLeft="259.25,30.25" />
+          TopLeft="258.25,86.25" />
         <NodeLayout
           Size="141,42"
           Id="Package\Transfer Port"
-          TopLeft="481.25,258.25" />
+          TopLeft="480.25,314.25" />
         <NodeLayout
           Size="142,42"
           Id="Package\Transfer Ship"
-          TopLeft="283.25,255.5" />
+          TopLeft="282.25,311.5" />
         <NodeLayout
           Size="166,42"
           Id="Package\Transfer Shipment"
-          TopLeft="36.2500000000001,398.25" />
+          TopLeft="35.2500000000001,454.25" />
         <NodeLayout
           Size="199,42"
           Id="Package\Transfer Shipment_Detail"
-          TopLeft="26,488.5" />
+          TopLeft="25,544.5" />
         <NodeLayout
           Size="156,42"
           Id="Package\Transfer Voyage"
-          TopLeft="266,403.75" />
+          TopLeft="265,459.75" />
         <NodeLayout
           Size="175,42"
           Id="Package\Transfer VoyagePort"
-          TopLeft="453.75,407" />
+          TopLeft="452.75,463" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
-          TopLeft="354,231.5">
+          TopLeft="353,287.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -7204,7 +7251,7 @@ where [refTable].[MONTH] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="536.875,76.75">
+          TopLeft="535.875,132.75">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -7226,7 +7273,7 @@ where [refTable].[MONTH] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 14]"
-          TopLeft="354.25,297.5">
+          TopLeft="353.25,353.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -7260,7 +7307,7 @@ where [refTable].[MONTH] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 15]"
-          TopLeft="266,422">
+          TopLeft="265,478">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -7282,7 +7329,7 @@ where [refTable].[MONTH] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 16]"
-          TopLeft="422,426.375">
+          TopLeft="421,482.375">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -7304,7 +7351,7 @@ where [refTable].[MONTH] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 17]"
-          TopLeft="116.375,366.25">
+          TopLeft="115.375,422.25">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -7326,7 +7373,7 @@ where [refTable].[MONTH] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 2]"
-          TopLeft="506.666666666667,157.75">
+          TopLeft="505.666666666667,213.75">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -7337,9 +7384,9 @@ where [refTable].[MONTH] = ?</property>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,8.881861575179" />
+                    End="0,8.88186157517899" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,8.881861575179"
+                    Point1="0,8.88186157517899"
                     Point2="0,12.881861575179"
                     Point3="-4,12.881861575179" />
                   <mssgle:LineSegment
@@ -7360,7 +7407,7 @@ where [refTable].[MONTH] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 20]"
-          TopLeft="343.25,374">
+          TopLeft="342.25,430">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -7382,7 +7429,7 @@ where [refTable].[MONTH] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 3]"
-          TopLeft="450,133.375">
+          TopLeft="449,189.375">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -7404,7 +7451,7 @@ where [refTable].[MONTH] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 4]"
-          TopLeft="132.5,233">
+          TopLeft="131.5,289">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -7426,7 +7473,7 @@ where [refTable].[MONTH] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 5]"
-          TopLeft="114,298">
+          TopLeft="113,354">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -7448,7 +7495,7 @@ where [refTable].[MONTH] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 6]"
-          TopLeft="558.791666666667,157.75">
+          TopLeft="557.791666666667,213.75">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -7470,7 +7517,7 @@ where [refTable].[MONTH] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 7]"
-          TopLeft="555,232.25">
+          TopLeft="554,288.25">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -7492,7 +7539,7 @@ where [refTable].[MONTH] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 9]"
-          TopLeft="446.25,53.5">
+          TopLeft="445.25,109.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -7514,7 +7561,7 @@ where [refTable].[MONTH] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 10]"
-          TopLeft="551.75,300.25">
+          TopLeft="550.75,356.25">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -7548,7 +7595,7 @@ where [refTable].[MONTH] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 8]"
-          TopLeft="259.25,50.875">
+          TopLeft="258.25,106.875">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -7570,7 +7617,7 @@ where [refTable].[MONTH] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 11]"
-          TopLeft="123.75,71.5">
+          TopLeft="122.75,127.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -7592,7 +7639,7 @@ where [refTable].[MONTH] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 12]"
-          TopLeft="128.625,151">
+          TopLeft="127.625,207">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -7614,7 +7661,7 @@ where [refTable].[MONTH] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 13]"
-          TopLeft="122.375,440.25">
+          TopLeft="121.375,496.25">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -7626,6 +7673,78 @@ where [refTable].[MONTH] = ?</property>
                   Capacity="5">
                   <mssgle:LineSegment
                     End="0,40.75" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="154,42"
+          Id="Package\GetLastETLDate"
+          TopLeft="644,49" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 18]"
+          TopLeft="644,70">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-241.75,31.5833333333333"
+              Start="0,0"
+              End="-234.25,31.5833333333333">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-211.727064220183,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-211.727064220183,0"
+                    Point2="-215.727064220183,0"
+                    Point3="-215.727064220183,4" />
+                  <mssgle:LineSegment
+                    End="-215.727064220183,27.5833333333333" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-215.727064220183,27.5833333333333"
+                    Point2="-215.727064220183,31.5833333333333"
+                    Point3="-219.727064220183,31.5833333333333" />
+                  <mssgle:LineSegment
+                    End="-234.25,31.5833333333333" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 19]"
+          TopLeft="721,91">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-162.666666666667,80.75"
+              Start="0,0"
+              End="-162.666666666667,73.25">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,43.9874701670645" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,43.9874701670645"
+                    Point2="0,47.9874701670645"
+                    Point3="-4,47.9874701670645" />
+                  <mssgle:LineSegment
+                    End="-158.666666666667,47.9874701670645" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-158.666666666667,47.9874701670645"
+                    Point2="-162.666666666667,47.9874701670645"
+                    Point3="-162.666666666667,51.9874701670645" />
+                  <mssgle:LineSegment
+                    End="-162.666666666667,73.25" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -8328,7 +8447,7 @@ where [refTable].[MONTH] = ?</property>
     design-time-name="Package\Transfer Shipment">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="150,42"
           Id="Package\Transfer Shipment\OLE DB Source"
@@ -8360,9 +8479,7 @@ where [refTable].[MONTH] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -8384,9 +8501,7 @@ where [refTable].[MONTH] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
