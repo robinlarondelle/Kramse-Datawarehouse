@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
-  DTS:ObjectName="Seasons Excel"
+  DTS:ObjectName="Seasons List"
   DTS:DTSID="{EAE527FC-5164-4596-9727-649856246836}"
   DTS:CreationName="EXCEL">
   <DTS:ObjectData>

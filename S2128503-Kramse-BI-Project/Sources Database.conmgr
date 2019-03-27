@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
-  DTS:ObjectName="Extract Staging"
+  DTS:ObjectName="Sources Database"
   DTS:DTSID="{117A4767-EB31-464C-9853-B06130B7B130}"
   DTS:CreationName="OLEDB">
   <DTS:ObjectData>
@@ -8,7 +8,7 @@
       DTS:ConnectionString="Data Source=AEI-SQL.AVANS.NL\STUDENTEN,1443;User ID=S2128503;Initial Catalog=s2128503_Project1;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;">
       <DTS:Password
         DTS:Name="Password"
-        Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAMmw8qZvYc0mwU7h/WN8M+gAAAAACAAAAAAAQZgAAAAEAACAAAADAOui4GdEGulEVyzBONa8kGnekOGqS10LJpGmiGY2PNwAAAAAOgAAAAAIAACAAAAB0Sb9K75fVpCjRqpUPeFFT/iVZIhRnG1iX4W7RlyY4SIAAAAAHnBmNwA8+BOzFh6R09vLxGRLjtwQJ6HCMJDgCFNe3o9+NZfuH2ycO6eBcyhvVKkZLaDzn9F22sN+7F5Ym0ajxa1z6OuPKyj9ugZFoIuw2iuCuYH5TOf+yNevNXQihKwwnaYacMYI5SBUSlICxoqK5LMDo6UONcZAJMRSPB5WzLkAAAACvG8n+cJ4X3XnsVsfXeaafqxSr3Z5hewkQER3HzPZt0pPN9nzLbmArovQDpmlKqfQaT8ZatfnCCFIoleFT1wM4</DTS:Password>
+        Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAMvI2fCBRPUeYQgdKMpTl6QAAAAACAAAAAAAQZgAAAAEAACAAAACghjNO9nvWvTi2I9ffISDi+DzMp6hir5+NoYiOo3UEyQAAAAAOgAAAAAIAACAAAADPvwkN7mgI5VyR2poaFAUkjmuv7jFgz5DE9DzNI1XeS4AAAADxvjvl7BXNfZLRjfjg4QdJNUK2foy0FDWJ86iJXOT7K53QAnNTn3WncffkFXI0Dmt05KMG9V160A3Vj+Ztin4Gbz6tgI3Vr5sZll/p4WOzydi2Tm8gu823FzppfhOTIxrRBfxxf5rPqSh57C5ynM4o4tLo4ADfohmopQJ1xRoNpUAAAABYwGTny0ZhlMSRDxOchW7DBnqQ2N9Hdd/ECYlAGi73KDy27gQx76R5e5zKI70vUYEsjMytj1TKPjRiA7NpxTGq</DTS:Password>
     </DTS:ConnectionManager>
   </DTS:ObjectData>
 </DTS:ConnectionManager>

@@ -11,8 +11,8 @@
   DTS:LocaleID="1043"
   DTS:ObjectName="Transform Sources to PSA"
   DTS:PackageType="5"
-  DTS:VersionBuild="87"
-  DTS:VersionGUID="{E4A25F8B-56FC-4573-8936-095B317E7C28}">
+  DTS:VersionBuild="88"
+  DTS:VersionGUID="{7F82B824-9241-4D85-8AFD-2264A4CCBF89}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -5561,20 +5561,20 @@ where [refTable].[MONTH] = ?</property>
                       errorRowDisposition="FailComponent"
                       lineageId="Package\Transfer Shipment_Detail\Derived Column 1.Outputs[Derived Column Output].Columns[CONTAINER_AMOUNT]"
                       name="CONTAINER_AMOUNT"
-                      precision="19"
+                      precision="20"
                       truncationRowDisposition="FailComponent">
                       <properties>
                         <property
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Expression"
-                          name="Expression">#{Package\Transfer Shipment_Detail\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of CONTAINER_NR_RANGE_END]} - #{Package\Transfer Shipment_Detail\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of CONTAINER_NR_RANGE_BEGIN]}</property>
+                          name="Expression">#{Package\Transfer Shipment_Detail\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of CONTAINER_NR_RANGE_END]} - #{Package\Transfer Shipment_Detail\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of CONTAINER_NR_RANGE_BEGIN]} + 1</property>
                         <property
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Friendly Expression"
                           expressionType="Notify"
-                          name="FriendlyExpression">[Copy of CONTAINER_NR_RANGE_END] - [Copy of CONTAINER_NR_RANGE_BEGIN]</property>
+                          name="FriendlyExpression">[Copy of CONTAINER_NR_RANGE_END] - [Copy of CONTAINER_NR_RANGE_BEGIN] + 1</property>
                       </properties>
                     </outputColumn>
                   </outputColumns>
@@ -5705,7 +5705,7 @@ where [refTable].[MONTH] = ?</property>
                       refId="Package\Transfer Shipment_Detail\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CONTAINER_AMOUNT]"
                       cachedDataType="numeric"
                       cachedName="CONTAINER_AMOUNT"
-                      cachedPrecision="19"
+                      cachedPrecision="20"
                       externalMetadataColumnId="Package\Transfer Shipment_Detail\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CONTAINER_AMOUNT]"
                       lineageId="Package\Transfer Shipment_Detail\Derived Column 1.Outputs[Derived Column Output].Columns[CONTAINER_AMOUNT]" />
                     <inputColumn
@@ -7139,7 +7139,7 @@ where [refTable].[MONTH] = ?</property>
         <NodeLayout
           Size="163,42"
           Id="Package\Transfer Calendar"
-          TopLeft="489,326" />
+          TopLeft="261,332" />
         <NodeLayout
           Size="173,42"
           Id="Package\Transfer Consignors"
@@ -7167,19 +7167,19 @@ where [refTable].[MONTH] = ?</property>
         <NodeLayout
           Size="166,42"
           Id="Package\Transfer Shipment"
-          TopLeft="289.25,330.25" />
+          TopLeft="36.2500000000001,398.25" />
         <NodeLayout
           Size="199,42"
           Id="Package\Transfer Shipment_Detail"
-          TopLeft="35,405.5" />
+          TopLeft="26,488.5" />
         <NodeLayout
           Size="156,42"
           Id="Package\Transfer Voyage"
-          TopLeft="310,410.75" />
+          TopLeft="266,403.75" />
         <NodeLayout
           Size="175,42"
           Id="Package\Transfer VoyagePort"
-          TopLeft="546.75,410" />
+          TopLeft="453.75,407" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
           TopLeft="354,231.5">
@@ -7230,26 +7230,26 @@ where [refTable].[MONTH] = ?</property>
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="190.416666666667,28.5"
+              EndConnector="-37.5833333333333,34.5"
               Start="0,0"
-              End="190.416666666667,21">
+              End="-37.5833333333333,27">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,12.9337788578372" />
+                    End="0,16.4987849331713" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,12.9337788578372"
-                    Point2="0,16.9337788578372"
-                    Point3="4,16.9337788578372" />
+                    Point1="0,16.4987849331713"
+                    Point2="0,20.4987849331713"
+                    Point3="-4,20.4987849331713" />
                   <mssgle:LineSegment
-                    End="186.416666666667,16.9337788578372" />
+                    End="-33.5833333333333,20.4987849331713" />
                   <mssgle:CubicBezierSegment
-                    Point1="186.416666666667,16.9337788578372"
-                    Point2="190.416666666667,16.9337788578372"
-                    Point3="190.416666666667,20.9337788578372" />
+                    Point1="-33.5833333333333,20.4987849331713"
+                    Point2="-37.5833333333333,20.4987849331713"
+                    Point3="-37.5833333333333,24.4987849331713" />
                   <mssgle:LineSegment
-                    End="190.416666666667,21" />
+                    End="-37.5833333333333,27" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -7260,30 +7260,18 @@ where [refTable].[MONTH] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 15]"
-          TopLeft="363.333333333333,410.75">
+          TopLeft="266,422">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="35.2500000000001,-38.5"
+              EndConnector="-63.7499999999999,0"
               Start="0,0"
-              End="35.2500000000001,-31">
+              End="-56.2499999999999,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,-15.2645064054258" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,-15.2645064054258"
-                    Point2="0,-19.2645064054258"
-                    Point3="4,-19.2645064054258" />
-                  <mssgle:LineSegment
-                    End="31.2500000000001,-19.2645064054258" />
-                  <mssgle:CubicBezierSegment
-                    Point1="31.2500000000001,-19.2645064054258"
-                    Point2="35.2500000000001,-19.2645064054258"
-                    Point3="35.2500000000001,-23.2645064054258" />
-                  <mssgle:LineSegment
-                    End="35.2500000000001,-31" />
+                    End="-56.2499999999999,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -7294,18 +7282,18 @@ where [refTable].[MONTH] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 16]"
-          TopLeft="466,431.375">
+          TopLeft="422,426.375">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="80.75,0"
+              EndConnector="31.75,0"
               Start="0,0"
-              End="73.25,0">
+              End="24.25,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="73.25,0" />
+                    End="24.25,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -7316,18 +7304,18 @@ where [refTable].[MONTH] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 17]"
-          TopLeft="200,348.25">
+          TopLeft="116.375,366.25">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="89.2500000000001,0"
+              EndConnector="0,32"
               Start="0,0"
-              End="81.7500000000001,0">
+              End="0,24.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="81.7500000000001,0" />
+                    End="0,24.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -7372,30 +7360,18 @@ where [refTable].[MONTH] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 20]"
-          TopLeft="570.5,368">
+          TopLeft="343.25,374">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-157.833333333333,42.75"
+              EndConnector="0,29.75"
               Start="0,0"
-              End="-157.833333333333,35.25">
+              End="0,22.25">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,21.3895939086294" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,21.3895939086294"
-                    Point2="0,25.3895939086294"
-                    Point3="-4,25.3895939086294" />
-                  <mssgle:LineSegment
-                    End="-153.833333333333,25.3895939086294" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-153.833333333333,25.3895939086294"
-                    Point2="-157.833333333333,25.3895939086294"
-                    Point3="-157.833333333333,29.3895939086294" />
-                  <mssgle:LineSegment
-                    End="-157.833333333333,35.25" />
+                    End="0,22.25" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -7542,26 +7518,26 @@ where [refTable].[MONTH] = ?</property>
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="44.5833333333334,25.75"
+              EndConnector="-183.416666666667,31.75"
               Start="0,0"
-              End="44.5833333333334,18.25">
+              End="-183.416666666667,24.25">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,11.2998177399757" />
+                    End="0,14.8648238153098" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,11.2998177399757"
-                    Point2="0,15.2998177399757"
-                    Point3="4,15.2998177399757" />
+                    Point1="0,14.8648238153098"
+                    Point2="0,18.8648238153098"
+                    Point3="-4,18.8648238153098" />
                   <mssgle:LineSegment
-                    End="40.5833333333334,15.2998177399757" />
+                    End="-179.416666666667,18.8648238153098" />
                   <mssgle:CubicBezierSegment
-                    Point1="40.5833333333334,15.2998177399757"
-                    Point2="44.5833333333334,15.2998177399757"
-                    Point3="44.5833333333334,19.2998177399757" />
+                    Point1="-179.416666666667,18.8648238153098"
+                    Point2="-183.416666666667,18.8648238153098"
+                    Point3="-183.416666666667,22.8648238153098" />
                   <mssgle:LineSegment
-                    End="44.5833333333334,18.25" />
+                    End="-183.416666666667,24.25" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -7638,30 +7614,18 @@ where [refTable].[MONTH] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 13]"
-          TopLeft="345.916666666667,372.25">
+          TopLeft="122.375,440.25">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-211.416666666667,33.25"
+              EndConnector="0,48.25"
               Start="0,0"
-              End="-211.416666666667,25.75">
+              End="0,40.75">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,9.49045346062053" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,9.49045346062053"
-                    Point2="0,13.4904534606205"
-                    Point3="-4,13.4904534606205" />
-                  <mssgle:LineSegment
-                    End="-207.416666666667,13.4904534606205" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-207.416666666667,13.4904534606205"
-                    Point2="-211.416666666667,13.4904534606205"
-                    Point3="-211.416666666667,17.4904534606205" />
-                  <mssgle:LineSegment
-                    End="-211.416666666667,25.75" />
+                    End="0,40.75" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -7685,7 +7649,7 @@ where [refTable].[MONTH] = ?</property>
         <NodeLayout
           Size="113,42"
           Id="Package\Transfer Calendar\Lookup"
-          TopLeft="658,311" />
+          TopLeft="658,287" />
         <NodeLayout
           Size="150,42"
           Id="Package\Transfer Calendar\OLE DB Source"
@@ -7696,45 +7660,43 @@ where [refTable].[MONTH] = ?</property>
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,88"
+              EndConnector="0,64"
               Start="0,0"
-              End="0,80.5">
+              End="0,56.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,80.5" />
+                    End="0,56.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Transfer Calendar.Paths[Lookup Match Output]"
-          TopLeft="714,353">
+          TopLeft="714,329">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,57"
+              EndConnector="0,81"
               Start="0,0"
-              End="0,49.5">
+              End="0,73.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,49.5" />
+                    End="0,73.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-48.19138671875,18.9453125,96.3827734375,11.609375"
+              BoundingBox="-48.19138671875,30.9453125,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -8472,21 +8434,21 @@ where [refTable].[MONTH] = ?</property>
         <NodeLayout
           Size="154,42"
           Id="Package\Transfer Shipment_Detail\Derived Column"
-          TopLeft="425,226" />
+          TopLeft="424,224" />
         <EdgeLayout
           Id="Package\Transfer Shipment_Detail.Paths[OLE DB Source Output]"
-          TopLeft="504.5,187">
+          TopLeft="504,187">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,39"
+              EndConnector="0,37"
               Start="0,0"
-              End="0,31.5">
+              End="0,29.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,31.5" />
+                    End="0,29.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -8527,13 +8489,13 @@ where [refTable].[MONTH] = ?</property>
           TopLeft="428,287" />
         <EdgeLayout
           Id="Package\Transfer Shipment_Detail.Paths[Derived Column Output1]"
-          TopLeft="425,247">
+          TopLeft="424,245">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="3,61"
+              EndConnector="4,63"
               Start="0,0"
-              End="-4.5,61">
+              End="-3.5,63">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
@@ -8544,13 +8506,13 @@ where [refTable].[MONTH] = ?</property>
                     Point2="-22.5,0"
                     Point3="-22.5,4" />
                   <mssgle:LineSegment
-                    End="-22.5,57" />
+                    End="-22.5,59" />
                   <mssgle:CubicBezierSegment
-                    Point1="-22.5,57"
-                    Point2="-22.5,61"
-                    Point3="-18.5,61" />
+                    Point1="-22.5,59"
+                    Point2="-22.5,63"
+                    Point3="-18.5,63" />
                   <mssgle:LineSegment
-                    End="-4.5,61" />
+                    End="-3.5,63" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>

@@ -11,8 +11,8 @@
   DTS:LocaleID="1043"
   DTS:ObjectName="Extract Sources"
   DTS:PackageType="5"
-  DTS:VersionBuild="108"
-  DTS:VersionGUID="{B2D328E7-85D6-4B42-A262-9301C54D86F5}">
+  DTS:VersionBuild="109"
+  DTS:VersionGUID="{852A52B2-3A5B-424E-AD60-1D7C1F4C3C36}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />

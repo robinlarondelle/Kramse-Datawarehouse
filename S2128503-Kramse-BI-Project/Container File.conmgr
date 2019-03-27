@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
-  DTS:ObjectName="Container File Manager"
+  DTS:ObjectName="Container File"
   DTS:DTSID="{B0A94C4C-025E-45B6-9B66-4D3C3BDF370F}"
   DTS:CreationName="FLATFILE">
   <DTS:ObjectData>
