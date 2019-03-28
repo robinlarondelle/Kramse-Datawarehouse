@@ -11,8 +11,8 @@
   DTS:LocaleID="1043"
   DTS:ObjectName="Execute ETL"
   DTS:PackageType="5"
-  DTS:VersionBuild="4"
-  DTS:VersionGUID="{AD35737C-5069-4584-8122-FE423CEA3699}">
+  DTS:VersionBuild="5"
+  DTS:VersionGUID="{A7600CFD-186B-429D-8630-09C0DFA5D4F8}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -132,21 +132,21 @@
         <NodeLayout
           Size="179,42"
           Id="Package\Execute Load to ODS"
-          TopLeft="363,333" />
+          TopLeft="362,319" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="451.25,278">
+          TopLeft="450.75,278">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,55"
+              EndConnector="0,41"
               Start="0,0"
-              End="0,47.5">
+              End="0,33.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,47.5" />
+                    End="0,33.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>

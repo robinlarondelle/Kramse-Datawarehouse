@@ -11,8 +11,8 @@
   DTS:LocaleID="1043"
   DTS:ObjectName="Extract Sources"
   DTS:PackageType="5"
-  DTS:VersionBuild="109"
-  DTS:VersionGUID="{852A52B2-3A5B-424E-AD60-1D7C1F4C3C36}">
+  DTS:VersionBuild="110"
+  DTS:VersionGUID="{271BB45E-36FF-43C6-AE30-A7B743721398}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -107,7 +107,7 @@
                 <connection
                   refId="Package\Load Consignors\Excel Source.Connections[OleDbConnection]"
                   connectionManagerID="{F909BC5E-3ADA-4F40-BD4D-6E0D2079A976}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Consignors Manager]"
+                  connectionManagerRefId="Project.ConnectionManagers[Consignors List]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -303,7 +303,7 @@
                 <connection
                   refId="Package\Load Consignors\OLE DB Destination.Connections[OleDbConnection]"
                   connectionManagerID="{117A4767-EB31-464C-9853-B06130B7B130}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Extract Staging]"
+                  connectionManagerRefId="Project.ConnectionManagers[Sources Database]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -451,7 +451,7 @@
                 <connection
                   refId="Package\Load ContainerList\Flat File Source 1.Connections[FlatFileConnection]"
                   connectionManagerID="{B0A94C4C-025E-45B6-9B66-4D3C3BDF370F}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Container File Manager]"
+                  connectionManagerRefId="Project.ConnectionManagers[Container File]"
                   name="FlatFileConnection" />
               </connections>
               <outputs>
@@ -740,7 +740,7 @@
                 <connection
                   refId="Package\Load ContainerList\OLE DB Destination.Connections[OleDbConnection]"
                   connectionManagerID="{117A4767-EB31-464C-9853-B06130B7B130}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Extract Staging]"
+                  connectionManagerRefId="Project.ConnectionManagers[Sources Database]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -1152,7 +1152,7 @@
                 <connection
                   refId="Package\Load Country List\OLE DB Destination.Connections[OleDbConnection]"
                   connectionManagerID="{117A4767-EB31-464C-9853-B06130B7B130}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Extract Staging]"
+                  connectionManagerRefId="Project.ConnectionManagers[Sources Database]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -1352,7 +1352,7 @@
                 <connection
                   refId="Package\Load Item\OLE DB Destination.Connections[OleDbConnection]"
                   connectionManagerID="{117A4767-EB31-464C-9853-B06130B7B130}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Extract Staging]"
+                  connectionManagerRefId="Project.ConnectionManagers[Sources Database]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -1517,7 +1517,7 @@
                 <connection
                   refId="Package\Load Item\OLE DB Source.Connections[OleDbConnection]"
                   connectionManagerID="{4027AF43-E7EF-4A84-8B02-0598E0F81191}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Kramse Access Table]"
+                  connectionManagerRefId="Project.ConnectionManagers[Kramse Business Data]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -1761,7 +1761,7 @@
                 <connection
                   refId="Package\Load Port\OLE DB Destination.Connections[OleDbConnection]"
                   connectionManagerID="{117A4767-EB31-464C-9853-B06130B7B130}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Extract Staging]"
+                  connectionManagerRefId="Project.ConnectionManagers[Sources Database]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -1923,7 +1923,7 @@
                 <connection
                   refId="Package\Load Port\OLE DB Source.Connections[OleDbConnection]"
                   connectionManagerID="{4027AF43-E7EF-4A84-8B02-0598E0F81191}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Kramse Access Table]"
+                  connectionManagerRefId="Project.ConnectionManagers[Kramse Business Data]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -2145,7 +2145,7 @@
                 <connection
                   refId="Package\Load Seasons\Excel Source.Connections[OleDbConnection]"
                   connectionManagerID="{EAE527FC-5164-4596-9727-649856246836}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Seasons Excel]"
+                  connectionManagerRefId="Project.ConnectionManagers[Seasons List]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -2280,7 +2280,7 @@
                 <connection
                   refId="Package\Load Seasons\OLE DB Destination.Connections[OleDbConnection]"
                   connectionManagerID="{117A4767-EB31-464C-9853-B06130B7B130}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Extract Staging]"
+                  connectionManagerRefId="Project.ConnectionManagers[Sources Database]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -2430,7 +2430,7 @@
                 <connection
                   refId="Package\Load Ship\OLE DB Destination.Connections[OleDbConnection]"
                   connectionManagerID="{117A4767-EB31-464C-9853-B06130B7B130}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Extract Staging]"
+                  connectionManagerRefId="Project.ConnectionManagers[Sources Database]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -2599,7 +2599,7 @@
                 <connection
                   refId="Package\Load Ship\OLE DB Source.Connections[OleDbConnection]"
                   connectionManagerID="{4027AF43-E7EF-4A84-8B02-0598E0F81191}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Kramse Access Table]"
+                  connectionManagerRefId="Project.ConnectionManagers[Kramse Business Data]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -2852,7 +2852,7 @@
                 <connection
                   refId="Package\Load Shipment\OLE DB Destination.Connections[OleDbConnection]"
                   connectionManagerID="{117A4767-EB31-464C-9853-B06130B7B130}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Extract Staging]"
+                  connectionManagerRefId="Project.ConnectionManagers[Sources Database]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -3017,7 +3017,7 @@
                 <connection
                   refId="Package\Load Shipment\OLE DB Source.Connections[OleDbConnection]"
                   connectionManagerID="{4027AF43-E7EF-4A84-8B02-0598E0F81191}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Kramse Access Table]"
+                  connectionManagerRefId="Project.ConnectionManagers[Kramse Business Data]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -3264,7 +3264,7 @@
                 <connection
                   refId="Package\Load Shipment Detail\OLE DB Destination.Connections[OleDbConnection]"
                   connectionManagerID="{117A4767-EB31-464C-9853-B06130B7B130}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Extract Staging]"
+                  connectionManagerRefId="Project.ConnectionManagers[Sources Database]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -3405,7 +3405,7 @@
                 <connection
                   refId="Package\Load Shipment Detail\OLE DB Source.Connections[OleDbConnection]"
                   connectionManagerID="{4027AF43-E7EF-4A84-8B02-0598E0F81191}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Kramse Access Table]"
+                  connectionManagerRefId="Project.ConnectionManagers[Kramse Business Data]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -3601,7 +3601,7 @@
                 <connection
                   refId="Package\Load Voyage\OLE DB Destination.Connections[OleDbConnection]"
                   connectionManagerID="{117A4767-EB31-464C-9853-B06130B7B130}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Extract Staging]"
+                  connectionManagerRefId="Project.ConnectionManagers[Sources Database]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -3656,7 +3656,7 @@
                       name="SHIP_ID" />
                     <externalMetadataColumn
                       refId="Package\Load Voyage\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DEPARTURE_DATE]"
-                      dataType="dbTimeStamp"
+                      dataType="dbDate"
                       name="DEPARTURE_DATE" />
                     <externalMetadataColumn
                       refId="Package\Load Voyage\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PORT_DEPARTURE]"
@@ -3746,7 +3746,7 @@
                 <connection
                   refId="Package\Load Voyage\OLE DB Source.Connections[OleDbConnection]"
                   connectionManagerID="{4027AF43-E7EF-4A84-8B02-0598E0F81191}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Kramse Access Table]"
+                  connectionManagerRefId="Project.ConnectionManagers[Kramse Business Data]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -3957,7 +3957,7 @@
                 <connection
                   refId="Package\Load VoyagePort\OLE DB Destination.Connections[OleDbConnection]"
                   connectionManagerID="{117A4767-EB31-464C-9853-B06130B7B130}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Extract Staging]"
+                  connectionManagerRefId="Project.ConnectionManagers[Sources Database]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -4124,7 +4124,7 @@
                 <connection
                   refId="Package\Load VoyagePort\OLE DB Source.Connections[OleDbConnection]"
                   connectionManagerID="{4027AF43-E7EF-4A84-8B02-0598E0F81191}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[Kramse Access Table]"
+                  connectionManagerRefId="Project.ConnectionManagers[Kramse Business Data]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -5409,49 +5409,35 @@
     design-time-name="Package\Load Voyage">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="171,42"
           Id="Package\Load Voyage\OLE DB Destination"
-          TopLeft="682,309" />
+          TopLeft="681,308" />
         <NodeLayout
           Size="150,42"
           Id="Package\Load Voyage\OLE DB Source"
           TopLeft="684,181" />
         <EdgeLayout
           Id="Package\Load Voyage.Paths[OLE DB Source Output]"
-          TopLeft="759,223">
+          TopLeft="762.75,223">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="8.5,86"
+              EndConnector="0,85"
               Start="0,0"
-              End="8.5,78.5">
+              End="0,77.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,39" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,39"
-                    Point2="0,43"
-                    Point3="4,43" />
-                  <mssgle:LineSegment
-                    End="4.5,43" />
-                  <mssgle:CubicBezierSegment
-                    Point1="4.5,43"
-                    Point2="8.5,43"
-                    Point3="8.5,47" />
-                  <mssgle:LineSegment
-                    End="8.5,78.5" />
+                    End="0,77.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
